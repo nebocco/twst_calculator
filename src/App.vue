@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Header />
+  <Party />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Party from './components/Party.vue'
+
 
 export default {
   name: 'App',
+  data() {
+    return {
+    }
+  },
   components: {
-    HelloWorld
+    Header,
+    Party
+  },
+  methods: {
   }
 }
 </script>
@@ -23,4 +32,9 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+body {
+  padding: 0;
+}
+
 </style>
