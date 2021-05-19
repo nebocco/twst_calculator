@@ -35,14 +35,29 @@
       </select>
     </div>
   </div>
+  {{ buffsBuddy }}
   <div class="status-box">
     <div class="status-each">
       <label for="hit-point">HP</label>
-      <input type="number" id="hit-point" v-model.number="HitPoint">
+      <input
+        type="number"
+        id="hit-point"
+        v-model.number="HitPoint"
+        min=0
+        onfocus="if(this.value==0)this.value='';"
+        onblur="if(this.value=='')this.value=0;"
+      >
     </div>
     <div class="status-each">
       <label for="attack">ATK</label>
-      <input type="number" id="attack" v-model.number="Attack">
+      <input
+        type="number"
+        id="attack"
+        v-model.number="Attack"
+        min=0
+        onfocus="if(this.value==0)this.value='';"
+        onblur="if(this.value=='')this.value=0;"
+      >
     </div>
   </div>
   <Buddy

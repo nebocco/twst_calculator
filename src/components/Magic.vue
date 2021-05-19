@@ -108,4 +108,13 @@ input[disabled] {
   background: #f2f4f6;
 }
 
+input:invalid {
+  border-color: red;
+  background: #eecccc;
+}
+
+input:invalid::before {
+  content: "0100101";
+}
+
 </style>

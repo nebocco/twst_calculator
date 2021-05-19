@@ -1,5 +1,7 @@
 <template>
   <h3>バディ</h3>
+  {{ buddyEnabled }}
+  {{ buffs }}
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>
@@ -24,7 +26,7 @@
           :name="buddy[0]"
           :disabled="!buddyEnabled[index]"
           v-model.number="buddyLevel[index]"
-          @change="$emit('update:buffsBuddy', buffs)"
+          @input="$emit('update:buffsBuddy', buffs)"
         >
       </td>
     </tr>
@@ -79,13 +81,14 @@ export default {
       return res;
     },
     buddyEnabled() {
+      console.log('update Buddy enabled!')
       return this.buddiesExtended.map((buddy) =>
         buddy[0] !== -1 && this.partyMember.includes(buddy[0])
       )
     },
   },
   watch: {
-    partyMember: {
+    buffs: {
       handler() {
         this.$emit('update:buffsBuddy', this.buffs)
       },
