@@ -1,6 +1,7 @@
 <template>
   <p>Total HP: {{ totalHitPoint }}</p>
   <p>Total ATK: {{ totalAttack }}</p>
+  <p>Total Damage: {{ totalDamage }}</p>
   <div class="party-member">
     <div class="party-tab">
       <ul class="tab">
@@ -26,6 +27,7 @@
       v-show="currentMember === i"
       @select-card="partyMember[i-1] = $event"
       @update:HP-ATK="updateStatus(i-1, $event)"
+      @update:totalDamage="updateDamage(i-1, $event)"
     />
   </div>
 </template>
@@ -42,7 +44,8 @@ export default {
       currentMember: 1,
       partyMember: [-1, -1, -1, -1, -1],
       partyHitPointList: [0, 0, 0, 0, 0],
-      partyAttackList: [0, 0, 0, 0, 0]
+      partyAttackList: [0, 0, 0, 0, 0],
+      partyDamageList: [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]],
     }
   },
   components: {
@@ -52,6 +55,10 @@ export default {
     updateStatus(index, event) {
       this.partyHitPointList[index] = event[0];
       this.partyAttackList[index] = event[1];
+    },
+    updateDamage(index, event) {
+      this.partyDamageList[index][event[0]] = event[1];
+      console.log(index, event);
     }
   },
   computed: {
@@ -60,6 +67,11 @@ export default {
     },
     totalAttack() {
       return this.partyAttackList.reduce((sum, ele) => sum + ele, 0)
+    },
+    totalDamage() {
+      return this.partyDamageList.reduce((sum, ele) =>
+        sum + ele.reduce((sum, ele) => sum + ele, 0), 0
+      )
     }
   }
 }

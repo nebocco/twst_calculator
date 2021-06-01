@@ -33,8 +33,4 @@ export default {
   margin-top: 60px;
 }
 
-body {
-  padding: 0;
-}
-
 </style>

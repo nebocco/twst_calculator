@@ -67,8 +67,18 @@
     @update:buffsBuddy="buffsBuddy = $event"
   />
   <h3>魔法</h3>
-  <Magic :magic="Magics[0]" :magicList="magicList" />
-  <Magic :magic="Magics[1]" :magicList="magicList" />
+  <Magic 
+    :magic="Magics[0]"
+    :magicList="magicList"
+    :BaseAttack=affectedAttack
+    @update:totalDamage="$emit('update:totalDamage', [0, $event])" 
+  />
+  <Magic
+    :magic="Magics[1]"
+    :magicList="magicList"
+    :BaseAttack = affectedAttack
+    @update:totalDamage="$emit('update:totalDamage', [1, $event])" 
+/>
 </div>
 </template>
 
@@ -175,7 +185,6 @@ export default {
 .party-member {
   width: 90%;
   margin: 0 auto;
-  /* background-color: aqua; */
 }
 
 .card-box {
@@ -188,11 +197,6 @@ export default {
 
 .card-detail > select {
   width: 90%;
-}
-
-input::after {
-  content: "aaa";
-  font-size: 50px;
 }
 
 .card-detail > select > option:first-child {

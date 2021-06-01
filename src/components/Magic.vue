@@ -12,12 +12,23 @@
         :disabled="magicCurrent === null"
       >
     </div>
+    <p>{{magicCurrent}}</p>
+    <p>damage: {{ totalDamage }}</p>
     <div class="magic-description">
       <dl>
         <dt>説明</dt>
         <dd>{{ magicCurrent === null ? "--" : magicCurrent.magic.text }}</dd>
         <dt>追加効果</dt>
-        <dd>{{ magicCurrent === null ? "--" : magicCurrent.text }}</dd>
+        <dd>
+          {{ magicCurrent === null ? "--" : magicCurrent.text }}
+          <input
+            type="checkbox"
+            name="DuoEnable"
+            id="duo-enable"
+            v-if="DuoUsable"
+            v-model="DuoEnabled"
+          />
+        </dd>
       </dl>
     </div>
   </div>
@@ -28,7 +39,9 @@ export default {
   name: 'Magic',
   data() {
     return {
-      magicLevel: 1
+      magicLevel: 1,
+      buffs: [],
+      DuoEnabled: false,
     }
   },
   props: {
@@ -38,6 +51,9 @@ export default {
     magicList: {
       type: Array,
       required: true,
+    },
+    BaseAttack: {
+      type: Number
     }
   },
   computed: {
@@ -48,6 +64,31 @@ export default {
         text: this.magic[Math.floor(this.magicLevel / 5)][1]
       }
     },
+    DuoUsable() {
+      return this.magicCurrent === null ? false : this.magicCurrent.text.includes("[DUO]")
+    },
+    BuffAttack() {
+      return 0;
+    },
+    BuffDamage() {
+      return 0;
+    },
+    totalDamage() {
+      if(this.magicCurrent === null) {
+        return 0;
+      }
+      const attack = this.BaseAttack + this.BuffAttack;
+      const power = (this.magicCurrent.magic.power + 4) / 8 +
+        (this.magicCurrent.magic.power + 2) / 80 * this.magicLevel;
+      const affectedCombo = this.DuoEnabled && this.DuoUsable ? 3 : this.magicCurrent.magic.combo;
+      const combo = (1 - 0.1 * (affectedCombo - 1)) * affectedCombo; 
+      return [attack, power, combo, attack * power * combo];
+    }
+  },
+  watch: {
+    totalDamage() {
+      this.$emit('update:totalDamage', this.totalDamage[3]);
+    }
   }
 }
 </script>
@@ -59,7 +100,6 @@ h4 {
 }
 
 dl {
-  /* width: 100%; */
   margin: 10px 0;
   display: flex;
   flex-wrap: wrap;

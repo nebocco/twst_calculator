@@ -127,7 +127,8 @@ tr, td, th {
 }
 
 td {
-  border-bottom: 1px solid #ddd; 
+  border-bottom: 1px solid #ddd;
+  padding: .2em 0;
 }
 
 th {
@@ -147,13 +148,13 @@ input[disabled] {
   background: #f2f4f6;
 }
 
-/* td > input {
-  padding: 0;
+td > input {
+  padding: 0.2em 0.4em;
   margin: 0;
   border: none;
   border-radius: 0;
   background: none;
   text-align: end;
-} */
+}
 
 </style>
