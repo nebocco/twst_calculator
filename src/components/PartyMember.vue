@@ -68,17 +68,19 @@
   />
   <h3>魔法</h3>
   <Magic 
+    key="magic1"
     :magic="Magics[0]"
     :magicList="magicList"
     :BaseAttack=affectedAttack
     @update:totalDamage="$emit('update:totalDamage', [0, $event])" 
   />
   <Magic
+    key="magic2"
     :magic="Magics[1]"
     :magicList="magicList"
     :BaseAttack = affectedAttack
     @update:totalDamage="$emit('update:totalDamage', [1, $event])" 
-/>
+  />
 </div>
 </template>
 

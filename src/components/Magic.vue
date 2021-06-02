@@ -12,8 +12,8 @@
         :disabled="magicCurrent === null"
       >
     </div>
-    <p>{{magicCurrent}}</p>
-    <p>damage: {{ totalDamage }}</p>
+    <!-- <p>{{magicCurrent}}</p> -->
+    <p>[atk, pow, cmb, damage] : <br> {{ totalDamage }}</p>
     <div class="magic-description">
       <dl>
         <dt>説明</dt>
@@ -75,7 +75,7 @@ export default {
     },
     totalDamage() {
       if(this.magicCurrent === null) {
-        return 0;
+        return [0, 0, 0, 0];
       }
       const attack = this.BaseAttack + this.BuffAttack;
       const power = (this.magicCurrent.magic.power + 4) / 8 +

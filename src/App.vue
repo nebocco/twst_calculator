@@ -1,11 +1,13 @@
 <template>
   <Header />
   <Party />
+  <Footer />
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import Party from './components/Party.vue'
+import Footer from './components/Footer.vue'
 
 
 export default {
@@ -16,7 +18,8 @@ export default {
   },
   components: {
     Header,
-    Party
+    Party,
+    Footer
   },
   methods: {
   }

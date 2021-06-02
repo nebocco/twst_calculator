@@ -1,7 +1,7 @@
 <template>
   <h3>バディ</h3>
-  {{ buddyEnabled }}
-  {{ buffs }}
+  <!-- {{ buddyEnabled }} -->
+  <!-- {{ buffs }} -->
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>
@@ -81,7 +81,6 @@ export default {
       return res;
     },
     buddyEnabled() {
-      console.log('update Buddy enabled!')
       return this.buddiesExtended.map((buddy) =>
         buddy[0] !== -1 && this.partyMember.includes(buddy[0])
       )

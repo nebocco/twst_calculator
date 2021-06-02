@@ -2,7 +2,7 @@
   <p>Total HP: {{ totalHitPoint }}</p>
   <p>Total ATK: {{ totalAttack }}</p>
   <p>Total Damage: {{ totalDamage }}</p>
-  <div class="party-member">
+  <div class="party">
     <div class="party-tab">
       <ul class="tab">
         <li 
@@ -58,7 +58,6 @@ export default {
     },
     updateDamage(index, event) {
       this.partyDamageList[index][event[0]] = event[1];
-      console.log(index, event);
     }
   },
   computed: {
