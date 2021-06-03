@@ -113,7 +113,7 @@ tr.buddy-enabled > td {
 }
 
 tr > td:last-child {
-  width: 15%;
+  width: 20%;
 }
 
 tr > td:first-child {
@@ -139,6 +139,7 @@ td > label {
 }
 
 input {
+  width: 100%;
   background: #fafbfc;
 }
 

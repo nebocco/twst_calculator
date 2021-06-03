@@ -35,7 +35,6 @@
       </select>
     </div>
   </div>
-  {{ buffsBuddy }}
   <div class="status-box">
     <div class="status-each">
       <label for="hit-point">HP</label>
@@ -71,14 +70,16 @@
     key="magic1"
     :magic="Magics[0]"
     :magicList="magicList"
-    :BaseAttack=affectedAttack
+    :BaseAttack="Attack"
+    :affectedAttack="affectedAttack"
     @update:totalDamage="$emit('update:totalDamage', [0, $event])" 
   />
   <Magic
     key="magic2"
     :magic="Magics[1]"
     :magicList="magicList"
-    :BaseAttack = affectedAttack
+    :BaseAttack="Attack"
+    :affectedAttack="affectedAttack"
     @update:totalDamage="$emit('update:totalDamage', [1, $event])" 
   />
 </div>
@@ -199,6 +200,11 @@ export default {
 
 .card-detail > select {
   width: 90%;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: #333;
+  border-bottom: #333 solid 3px;
 }
 
 .card-detail > select > option:first-child {
@@ -221,6 +227,12 @@ export default {
 .status-each > input {
   width: 90%;
   max-width: 90%;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: #333;
+  border-bottom: #333 solid 3px;
+  text-align: right;
 }
 
 </style>
