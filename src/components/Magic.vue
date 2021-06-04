@@ -132,8 +132,27 @@ export default {
           case "ATK UP（中）":
             totalBuff += 0.2 + 0.015 * this.magicLevel;
             break;
+          case "ATK UP（大）":
+            assert(this.magicLevel == 10);
+            totalBuff += 0.5;
+            break;
         }
       })
+      switch(thi.magicCurrent.text) {
+        case "ATK UP（極小）":
+          totalBuff += 0.05 + 0.005 * this.magicLevel;
+          break;
+        case "ATK UP（小）":
+          totalBuff += 0.1 + 0.01 * this.magicLevel;
+          break;
+        case "ATK UP（中）":
+          totalBuff += 0.2 + 0.015 * this.magicLevel;
+          break;
+        case "ATK UP（大）":
+          assert(this.magicLevel == 10);
+          totalBuff += 0.5;
+          break;
+      }
       return this.BaseAttack * totalBuff;
     },
     BuffDamage() {
@@ -147,10 +166,29 @@ export default {
             totalBuff += 0.025 + 0.0025 * this.magicLevel;
             break;
           case "ダメージ UP（中）":
-            totalBuff += 0.5 + 0.00375 * this.magicLevel;
+            totalBuff += 0.05 + 0.00375 * this.magicLevel;
+            break;
+          case "ダメージ UP（大）":
+            assert(this.magicLevel == 10);
+            totalBuff += 0.15;
             break;
         }
       })
+      switch(this.magicCurrent.text) {
+        case "ダメージ UP（極小）":
+          totalBuff += 0.0125 +  0.00125 * this.magicLevel;
+          break;
+        case "ダメージ UP（小）":
+          totalBuff += 0.025 + 0.0025 * this.magicLevel;
+          break;
+        case "ダメージ UP（中）":
+          totalBuff += 0.05 + 0.00375 * this.magicLevel;
+          break;
+        case "ダメージ UP（大）":
+          assert(this.magicLevel == 10);
+          totalBuff += 0.15;
+          break;
+      }
       return totalBuff
     },
     totalDamage() {

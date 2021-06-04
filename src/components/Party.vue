@@ -16,19 +16,21 @@
         </li>
       </ul>
     </div>
-    <PartyMember 
-      :characterList="staticData.characters"
-      :costumeList="staticData.costumes"
-      :cardList="staticData.cards"
-      :magicList="staticData.magics"
-      :partyMember="partyMember"
-      v-for="i in 5"
-      :key="i"
-      v-show="currentMember === i"
-      @select-card="partyMember[i-1] = $event"
-      @update:HP-ATK="updateStatus(i-1, $event)"
-      @update:totalDamage="updateDamage(i-1, $event)"
-    />
+    <div class="party-member-container">
+      <PartyMember 
+        :characterList="staticData.characters"
+        :costumeList="staticData.costumes"
+        :cardList="staticData.cards"
+        :magicList="staticData.magics"
+        :partyMember="partyMember"
+        v-for="i in 5"
+        :key="i"
+        v-show="currentMember === i"
+        @select-card="partyMember[i-1] = $event"
+        @update:HP-ATK="updateStatus(i-1, $event)"
+        @update:totalDamage="updateDamage(i-1, $event)"
+      />
+    </div>
   </div>
 </template>
 
