@@ -1,5 +1,6 @@
 <template>
   <div class="magic-container">
+    {{ magicCurrent }}
     <div class="magic-name">
       <h4>{{ magicCurrent === null ? "" : magicCurrent.magic.name }}</h4>
       <label for="magicLevel">Lv.</label>
@@ -9,6 +10,7 @@
         v-model.number="magicLevel"
         min="1"
         max="10"
+        @blur="magicLevel = Math.max(1, Math.min(10, magicLevel))"
         :disabled="magicCurrent === null"
       >
     </div>
@@ -39,7 +41,7 @@
           :key=index
         >
           <div class="buff-name">
-            {{ buff }}
+            {{ buff.text }}
           </div>
           <button @click="remove(index)">x</button>
         </li>
@@ -47,11 +49,12 @@
           <select v-model="newBuff">
           <option disabled value="">選択してください</option>
           <option
-            v-for="(buff, index) in optionBuffs" 
+            v-for="(buff, index) in filteredAvailableBuffs"
             :value="buff" 
             :key="index"
           >
-            {{ buff }}
+
+            {{ buff.text }}
           </option>
         </select>
         </li>
@@ -62,19 +65,7 @@
 
 <script>
 
-const optionBuffs = [
-  "ATK UP（極小）",
-  "ATK UP（小）",
-  "ATK UP（中）",
-  "ATK UP（大）",
-  "ダメージ UP（極小）",
-  "ダメージ UP（小）",
-  "ダメージ UP（中）",
-  "ダメージ UP（大）",
-  // "ダメージ DOWN（小）",
-  // "ダメージ DOWN（中）",
-  // "ダメージ DOWN（大）",
-]
+const attrs = ["火", "水", "木", "無"];
 
 export default {
   name: 'Magic',
@@ -85,7 +76,6 @@ export default {
       newBuff: "",
       DuoEnabled: false,
       modal: false,
-      optionBuffs: optionBuffs,
     }
   },
   props: {
@@ -101,6 +91,10 @@ export default {
     },
     affectedAttack: {
       type: Number
+    },
+    allAvailableBuffs: {
+      type: Array,
+      required: true,
     }
   },
   methods: {
@@ -110,85 +104,81 @@ export default {
   },
   computed: {
     magicCurrent() {
-      return this.magic === undefined ? null :
+      const level = Math.max(1, Math.min(10, this.magicLevel));
+      const index = Math.floor(level / 5);
+      let mc = this.magic === undefined ? null :
       { 
-        magic: this.magicList[this.magic[Math.floor(this.magicLevel / 5)][0]],
-        text: this.magic[Math.floor(this.magicLevel / 5)][1]
+        magic: this.magicList[this.magic[index][0]],
+        text: this.magic[index][1]
       }
+      if (mc !== null && mc.text.includes("UP")) {
+        this.$emit('update:availableBuff', {
+          text: mc.text,
+          level: level
+        });
+      }
+      return mc
     },
     DuoUsable() {
       return this.magicCurrent === null ? false : this.magicCurrent.text.includes("[DUO]")
     },
+
+    filteredAvailableBuffs() {
+      return this.allAvailableBuffs.filter(buff => buff.text);
+    },
+    
     BuffAttack() {
+      if (this.magicCurrent === null)
+        return 0;
+
       let totalBuff = 0;
-      this.buffs.forEach(buff => {
-        switch(buff) {
-          case "ATK UP（極小）":
-            totalBuff += 0.05 + 0.005 * this.magicLevel;
-            break;
-          case "ATK UP（小）":
-            totalBuff += 0.1 + 0.01 * this.magicLevel;
-            break;
-          case "ATK UP（中）":
-            totalBuff += 0.2 + 0.015 * this.magicLevel;
-            break;
-          case "ATK UP（大）":
-            assert(this.magicLevel == 10);
-            totalBuff += 0.5;
-            break;
-        }
-      })
-      switch(thi.magicCurrent.text) {
-        case "ATK UP（極小）":
-          totalBuff += 0.05 + 0.005 * this.magicLevel;
-          break;
-        case "ATK UP（小）":
-          totalBuff += 0.1 + 0.01 * this.magicLevel;
-          break;
-        case "ATK UP（中）":
-          totalBuff += 0.2 + 0.015 * this.magicLevel;
-          break;
-        case "ATK UP（大）":
-          assert(this.magicLevel == 10);
-          totalBuff += 0.5;
-          break;
+      const current = {
+        text: this.magicCurrent.text,
+        level: this.magicLevel
       }
+
+      this.buffs
+      .concat(current)
+      .filter(buff => buff.text.includes("ATK UP"))
+      .forEach(buff => {
+        if (buff.text.includes("極小")) 
+          totalBuff += 0.05 + 0.005 * buff.level;
+        else if (buff.text.includes("小")) 
+          totalBuff += 0.1 + 0.01 * buff.level;
+        else if (buff.text.includes("中")) 
+          totalBuff += 0.2 + 0.015 * buff.level;
+        else if (buff.text.includes("大")) 
+          totalBuff += 0.5;
+      })
       return this.BaseAttack * totalBuff;
     },
     BuffDamage() {
+      if (this.magicCurrent === null)
+        return 0;
+
       let totalBuff = 0;
-      this.buffs.forEach(buff => {
-        switch(buff) {
-          case "ダメージ UP（極小）":
-            totalBuff += 0.0125 +  0.00125 * this.magicLevel;
-            break;
-          case "ダメージ UP（小）":
-            totalBuff += 0.025 + 0.0025 * this.magicLevel;
-            break;
-          case "ダメージ UP（中）":
-            totalBuff += 0.05 + 0.00375 * this.magicLevel;
-            break;
-          case "ダメージ UP（大）":
-            assert(this.magicLevel == 10);
-            totalBuff += 0.15;
-            break;
-        }
-      })
-      switch(this.magicCurrent.text) {
-        case "ダメージ UP（極小）":
-          totalBuff += 0.0125 +  0.00125 * this.magicLevel;
-          break;
-        case "ダメージ UP（小）":
-          totalBuff += 0.025 + 0.0025 * this.magicLevel;
-          break;
-        case "ダメージ UP（中）":
-          totalBuff += 0.05 + 0.00375 * this.magicLevel;
-          break;
-        case "ダメージ UP（大）":
-          assert(this.magicLevel == 10);
-          totalBuff += 0.15;
-          break;
+      const current = {
+        text: this.magicCurrent.text,
+        level: this.magicLevel
       }
+
+      this.buffs
+      .concat(current)
+      .filter(buff => buff.text.includes("ダメージ UP"))
+      .forEach(buff => {
+        const bonus = 
+          buff.text.includes(attrs[this.magicCurrent.magic.attr] + "属性") ? 1.2 :
+          buff.text.includes("属性") ? 0 : 1
+
+        if (buff.text.includes("極小")) 
+          totalBuff += (0.0125 +  0.00125 * buff.level) * bonus;
+        else if (buff.text.includes("小")) 
+          totalBuff += (0.025 + 0.0025 * buff.level) * bonus;
+        else if (buff.text.includes("中")) 
+          totalBuff += (0.05 + 0.00375 * buff.level) * bonus;
+        else if (buff.text.includes("大")) 
+          totalBuff += (0.125) * bonus;
+      })
       return totalBuff
     },
     totalDamage() {
@@ -205,7 +195,12 @@ export default {
   },
   watch: {
     totalDamage() {
-      this.$emit('update:totalDamage', this.totalDamage[3]);
+      if (this.magicCurrent !== null) {
+        this.$emit('update:totalDamage', {
+          damage: this.totalDamage[3],
+          attr: this.magicCurrent.magic.attr
+        });
+      } 
     },
     newBuff() {
       if (this.newBuff !== "") {
@@ -288,12 +283,17 @@ input:invalid::before {
 
 ul.buffs-list {
   list-style: none;
+  padding-left: 0;
 }
 
 li.selected-buffs {
   background: aqua;
   padding: 10px 20px;
   border-radius: 3px;
+}
+
+.buffs-list select {
+  width: 100%;
 }
 
 .buff-name {

@@ -1,6 +1,7 @@
 <template>
 <div class="party-member">
   <h3>カード</h3>
+  {{ buffsBuddy }}
   <div class="card-box">
     <div class="card-detail">
       <select
@@ -72,7 +73,9 @@
     :magicList="magicList"
     :BaseAttack="Attack"
     :affectedAttack="affectedAttack"
+    :allAvailableBuffs="allAvailableBuffs"
     @update:totalDamage="$emit('update:totalDamage', [0, $event])" 
+    @update:availableBuff="updateAvailableBuff(0, $event)"
   />
   <Magic
     key="magic2"
@@ -80,7 +83,9 @@
     :magicList="magicList"
     :BaseAttack="Attack"
     :affectedAttack="affectedAttack"
+    :allAvailableBuffs="allAvailableBuffs"
     @update:totalDamage="$emit('update:totalDamage', [1, $event])" 
+    @update:availableBuff="updateAvailableBuff(1, $event)"
   />
 </div>
 </template>
@@ -100,6 +105,7 @@ export default {
       Buddies: [],
       Magics: [],
       buffsBuddy: [0, 0],
+      availableBuff: [{}, {}]
     }
   },
   methods: {
@@ -111,6 +117,14 @@ export default {
       this.Buddies = card.buddies;
       this.Magics = card.magics;
       this.$emit('select-card', this.Name);
+    },
+    updateAvailableBuff(index, buff) {
+      if(buff.text !== "") {
+        buff.text += "（" + this.characterList[this.Name].name +
+          "【" + this.costumeList[this.Costume].name + "】）"
+      }
+      this.availableBuff[index] = buff;
+      this.$emit('update:availableBuff', this.availableBuff);
     }
   },
   props: {
@@ -131,6 +145,10 @@ export default {
       required: true
     },
     partyMember: {
+      type: Array,
+      required: true
+    },
+    allAvailableBuffs: {
       type: Array,
       required: true
     }
@@ -165,11 +183,11 @@ export default {
     },
 
     affectedHitPoint() {
-      return Math.floor(this.HitPoint * (1 + this.buffsBuddy[0]))
+      return Math.floor(this.HitPoint * (1 + this.buffsBuddy[1]))
     },
 
     affectedAttack() {
-      return Math.floor(this.Attack * (1 + this.buffsBuddy[1]))
+      return Math.floor(this.Attack * (1 + this.buffsBuddy[0]))
     }
   },
   watch: {

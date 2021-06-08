@@ -38,10 +38,10 @@ export default {
   data() {
     return {
       effectText: [
+        "ATK UP（小）",
+        "ATK UP（中）",
         "HP UP（小）",
         "HP UP（中）",
-        "ATK UP（小）",
-        "ATK UP（中）"
       ],
       buddyLevel: [1, 1, 1],
       attackBuff: [1, 1, 1],
