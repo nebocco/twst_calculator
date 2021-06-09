@@ -1,6 +1,5 @@
 <template>
   <div class="magic-container">
-    {{ magicCurrent }}
     <div class="magic-name">
       <h4>{{ magicCurrent === null ? "" : magicCurrent.magic.name }}</h4>
       <label for="magicLevel">Lv.</label>
@@ -14,7 +13,6 @@
         :disabled="magicCurrent === null"
       >
     </div>
-    <!-- <p>{{magicCurrent}}</p> -->
     <p>[atk, pow, cmb, damage] : <br> {{ totalDamage }}</p>
     <div class="magic-description">
       <dl>
@@ -26,7 +24,6 @@
           <input
             type="checkbox"
             name="DuoEnable"
-            id="duo-enable"
             v-if="DuoUsable"
             v-model="DuoEnabled"
           />
@@ -47,13 +44,12 @@
         </li>
         <li class="add-buff">
           <select v-model="newBuff">
-          <option disabled value="">選択してください</option>
+          <option disabled value="">バフを追加</option>
           <option
             v-for="(buff, index) in filteredAvailableBuffs"
             :value="buff" 
             :key="index"
           >
-
             {{ buff.text }}
           </option>
         </select>
@@ -95,11 +91,29 @@ export default {
     allAvailableBuffs: {
       type: Array,
       required: true,
+    },
+    memberIndex: {
+      type: Number,
+      required: true
+    },
+    magicIndex: {
+      type: Number,
+      required: true
     }
   },
   methods: {
     remove(index) {
       this.buffs.splice(index, 1);
+    },
+    clearAll() {
+      this.magicLevel = 1;
+      this.buffs = [];
+      this.newBuff = "";
+      this.DuoEnabled = false;
+      this.modal = false;
+    },
+    loadStorage(level) {
+      this.magicLevel = level;
     }
   },
   computed: {
@@ -207,6 +221,9 @@ export default {
         this.buffs.push(this.newBuff);
         this.newBuff = "";
       } 
+    },
+    magicLevel() {
+      this.$emit("update:magicLevel", this.magicLevel);
     }
   }
 }
@@ -215,7 +232,8 @@ export default {
 <style scoped>
 h4 {
   display: inline-block;
-  margin-right: 1em;
+  font-size: 1.2em;
+  margin-right: .2em;
 }
 
 dl {

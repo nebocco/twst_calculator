@@ -5,15 +5,21 @@
   <p>total Damage: {{ vsAttrDamage }}</p>
   <!-- {{ partyDamageList }} -->
   <!-- {{ vsAttr }} -->
-  <div class="vs-attr">
-    <div
-      class="attr-selector"
-      v-for="i in 4"
-      :key="i"
-      :class="{ active: vsAttr === i-1}"
-      @click="vsAttr = i-1"
-    >
-      {{ attrs[i-1] }}
+  <button @click="clearAll">Clear All</button>
+  <div class="vs-attr-container">
+    <div class="vs-attr-text">
+      相手属性：
+    </div>
+    <div class="vs-attr">
+      <div
+        class="attr-selector"
+        v-for="i in 4"
+        :key="i"
+        :class="{ active: vsAttr === i-1}"
+        @click="vsAttr = i-1"
+      >
+        {{ attrs[i-1] }}
+      </div>
     </div>
   </div>
   <div class="party">
@@ -32,14 +38,16 @@
     </div>
     <div class="party-member-container">
       <PartyMember 
+        v-for="i in 5"
+        :key="i"
+        :memberIndex="i-1"
+        :ref="'member' + (i-1)"
         :characterList="staticData.characters"
         :costumeList="staticData.costumes"
         :cardList="staticData.cards"
         :magicList="staticData.magics"
         :partyMember="partyMember"
         :allAvailableBuffs="allAvailableBuffs.flat()"
-        v-for="i in 5"
-        :key="i"
         v-show="currentMember === i"
         @select-card="partyMember[i-1] = $event"
         @update:HP-ATK="updateStatus(i-1, $event)"
@@ -82,6 +90,12 @@ export default {
     },
     updateAvailableBuff(index, buffs) {
       this.allAvailableBuffs[index] = buffs
+    },
+    clearAll() {
+      this.currentMember = 1;
+      for (let i = 0; i < 5; ++i) {
+        this.$refs["member" + i].clearAll();
+      }
     }
   },
   computed: {
@@ -117,12 +131,24 @@ export default {
 
 <style scoped>
 
+.vs-attr-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* justify-items: center; */
+}
+
+.vs-attr-text {
+  margin-right: .5em;
+}
+
 .vs-attr {
   display: flex;
-  width: 30%;
+  width: 60%;
   justify-content: space-between;
   align-items: center;
-  margin: 20px auto;
+  margin: 20px 0;
 }
 
 .attr-selector {

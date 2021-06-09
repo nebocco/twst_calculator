@@ -1,7 +1,7 @@
 <template>
 <div class="party-member">
   <h3>カード</h3>
-  {{ buffsBuddy }}
+  <button @click="clearAll">Clear</button>
   <div class="card-box">
     <div class="card-detail">
       <select
@@ -12,7 +12,7 @@
         <option value="-1">名前</option>
         <option 
           v-for="c in filteredCharacters"
-          :key="c.id"
+          :key="'name-' + c.id"
           :value="c.id"
         >
           {{ c.name }}
@@ -28,7 +28,7 @@
         <option value="-1">コスチューム</option>
         <option 
           v-for="c in filteredCostumes"
-          :key="c.id"
+          :key="'costume-' + c.id"
           :value="c.id"
         >
           {{ c.name }}
@@ -41,7 +41,6 @@
       <label for="hit-point">HP</label>
       <input
         type="number"
-        id="hit-point"
         v-model.number="HitPoint"
         min=0
         onfocus="if(this.value==0)this.value='';"
@@ -52,7 +51,6 @@
       <label for="attack">ATK</label>
       <input
         type="number"
-        id="attack"
         v-model.number="Attack"
         min=0
         onfocus="if(this.value==0)this.value='';"
@@ -61,31 +59,29 @@
     </div>
   </div>
   <Buddy
+    ref="buddy"
     :buddies="Buddies"
     :characterList="characterList"
     :partyMember="partyMember"
+    :memberIndex="memberIndex"
     @update:buffsBuddy="buffsBuddy = $event"
+    @update:buddyLevel="buddyLevelRef = $event"
   />
   <h3>魔法</h3>
   <Magic 
-    key="magic1"
-    :magic="Magics[0]"
+    v-for="i in 2"
+    :key="'magic' + i"
+    :ref="'magic' + i"
+    :memberIndex="memberIndex"
+    :magicIndex="i-1"
+    :magic="Magics[i-1]"
     :magicList="magicList"
     :BaseAttack="Attack"
     :affectedAttack="affectedAttack"
     :allAvailableBuffs="allAvailableBuffs"
-    @update:totalDamage="$emit('update:totalDamage', [0, $event])" 
-    @update:availableBuff="updateAvailableBuff(0, $event)"
-  />
-  <Magic
-    key="magic2"
-    :magic="Magics[1]"
-    :magicList="magicList"
-    :BaseAttack="Attack"
-    :affectedAttack="affectedAttack"
-    :allAvailableBuffs="allAvailableBuffs"
-    @update:totalDamage="$emit('update:totalDamage', [1, $event])" 
-    @update:availableBuff="updateAvailableBuff(1, $event)"
+    @update:totalDamage="$emit('update:totalDamage', [i-1, $event])" 
+    @update:availableBuff="updateAvailableBuff(i-1, $event)"
+    @update:magicLevel="magicLevelRef[i-1] = $event"
   />
 </div>
 </template>
@@ -105,7 +101,9 @@ export default {
       Buddies: [],
       Magics: [],
       buffsBuddy: [0, 0],
-      availableBuff: [{}, {}]
+      availableBuff: [{}, {}],
+      buddyLevelRef: [1, 1, 1],
+      magicLevelRef: [1, 1],
     }
   },
   methods: {
@@ -119,12 +117,58 @@ export default {
       this.$emit('select-card', this.Name);
     },
     updateAvailableBuff(index, buff) {
+      if (this.Name < 0 || this.Costume < 0) {
+        return;
+      }
       if(buff.text !== "") {
         buff.text += "（" + this.characterList[this.Name].name +
           "【" + this.costumeList[this.Costume].name + "】）"
       }
       this.availableBuff[index] = buff;
       this.$emit('update:availableBuff', this.availableBuff);
+    },
+    clearAll() {
+      this.Name = -1;
+      this.Costume = -1;
+      this.HitPoint = 0;
+      this.Attack = 0;
+      this.Buddies = [];
+      this.Magics = [];
+      this.buffsBuddy = [0, 0];
+      this.availableBuff = [{}, {}];
+      console.log("main cleared.")
+
+      this.$refs.magic1.clearAll();
+      this.$refs.magic2.clearAll();
+      this.$refs.buddy.clearAll();
+    },
+    loadStorage() {
+      if (localStorage.getItem('currentMembers')) {
+        let members = JSON.parse(localStorage.getItem('currentMembers'));
+        try {
+          const member = members[this.memberIndex];
+          if (member) {
+            this.Name = member.name;
+            this.Costume = member.costume;
+            this.HitPoint = member.hp;
+            this.Attack = member.atk;
+            this.fillDetails();
+            this.$refs.buddy.loadStorage(member.buddyLevel);
+            this.$refs.magic1.loadStorage(member.magicLevel[0]);
+            this.$refs.magic2.loadStorage(member.magicLevel[1]);
+          }
+        } catch(e) {
+          members[this.memberIndex] = null;
+          localStorage.setItem('currentMembers', JSON.stringify(members));
+        }
+      } else {
+          localStorage.setItem('currentMembers', JSON.stringify([]));
+      }
+    },
+    saveStorage() {
+      let members = JSON.parse(localStorage.getItem('currentMembers'))
+      members[this.memberIndex] = this.characterSaveData;
+      localStorage.setItem('currentMembers', JSON.stringify(members))
     }
   },
   props: {
@@ -150,6 +194,10 @@ export default {
     },
     allAvailableBuffs: {
       type: Array,
+      required: true
+    },
+    memberIndex: {
+      type: Number,
       required: true
     }
   },
@@ -188,7 +236,21 @@ export default {
 
     affectedAttack() {
       return Math.floor(this.Attack * (1 + this.buffsBuddy[0]))
+    },
+
+    characterSaveData() {
+      return {
+        name: this.Name,
+        costume: this.Costume,
+        hp: this.HitPoint,
+        atk: this.Attack,
+        buddyLevel: this.buddyLevelRef,
+        magicLevel: this.magicLevelRef,
+      }
     }
+  },
+  mounted() {
+    this.loadStorage();
   },
   watch: {
     affectedHitPoint() {
@@ -196,6 +258,14 @@ export default {
     },
     affectedAttack() {
       this.$emit('update:HP-ATK', [this.affectedHitPoint, this.affectedAttack])
+    },
+    characterSaveData: {
+      handler() {
+        if(this.Name >= 0 && this.Costume >= 0) {
+          this.saveStorage()
+        }
+      },
+      deep: true
     }
   }
 }

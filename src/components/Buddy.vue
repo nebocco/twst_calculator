@@ -1,7 +1,5 @@
 <template>
   <h3>バディ</h3>
-  <!-- {{ buddyEnabled }} -->
-  <!-- {{ buffs }} -->
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>
@@ -10,7 +8,7 @@
     </tr>
     <tr
       v-for="(buddy, index) in buddiesExtended"
-      :key="buddy[0]"
+      :key="'buddy-' + index"
       :class="{ 'buddy-enabled': buddyEnabled[index] }"
     >
       <td>
@@ -19,14 +17,14 @@
       <td>{{ buddy[0] == -1 ? "" : effectText[buddy[1]]}}</td>
       <td>
         <input 
-          type="number" 
-          min=1
-          max=10
-          :id="buddy[0]"
-          :name="buddy[0]"
-          :disabled="!buddyEnabled[index]"
+          type="number"
           v-model.number="buddyLevel[index]"
+          min="1"
+          max="10"
+          :name="'buddy-' + memberIndex + index"
+          :disabled="!buddyEnabled[index]"
           @input="$emit('update:buffsBuddy', buffs)"
+          @blur="buddyLevel[index] = Math.max(1, Math.min(10, buddyLevel[index]))"
         >
       </td>
     </tr>
@@ -44,8 +42,6 @@ export default {
         "HP UP（中）",
       ],
       buddyLevel: [1, 1, 1],
-      attackBuff: [1, 1, 1],
-      hpBuff: [1, 1, 1],
     }
   },
   props: {
@@ -60,6 +56,18 @@ export default {
     partyMember: {
       type: Array,
       required: true
+    },
+    memberIndex: {
+      type: Number,
+      required: true
+    }
+  },
+  methods: {
+    clearAll() {
+      this.buddyLevel = [1, 1, 1];
+    },
+    loadStorage(level) {
+      this.buddyLevel = level;
     }
   },
   computed: {
@@ -90,6 +98,12 @@ export default {
     buffs: {
       handler() {
         this.$emit('update:buffsBuddy', this.buffs)
+      },
+      deep: true
+    },
+    buddyLevel: {
+      handler() {
+        this.$emit("update:buddyLevel", this.buddyLevel);
       },
       deep: true
     }
@@ -147,6 +161,12 @@ input[disabled] {
   color: #aaa;
   background: #f2f4f6;
 }
+
+input:invalid {
+  border-color: red;
+  background: #eecccc;
+}
+
 
 td > input {
   padding: 0.2em 0.4em;
