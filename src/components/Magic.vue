@@ -11,7 +11,7 @@
         max="10"
         @blur="magicLevel = Math.max(1, Math.min(10, magicLevel))"
         :disabled="magicCurrent === null"
-      >
+      />
     </div>
     <p>[atk, pow, cmb, damage] : <br> {{ totalDamage }}</p>
     <div class="magic-description">
@@ -30,31 +30,44 @@
         </dd>
       </dl>
     </div>
-    <div class="other-buffs">
-      <ul class="buffs-list">
-        <li
-          class="selected-buffs"
-          v-for="(buff, index) in buffs"
-          :key=index
-        >
-          <div class="buff-name">
-            {{ buff.text }}
-          </div>
-          <button @click="remove(index)">x</button>
-        </li>
-        <li class="add-buff">
-          <select v-model="newBuff">
-          <option disabled value="">バフを追加</option>
-          <option
-            v-for="(buff, index) in filteredAvailableBuffs"
-            :value="buff" 
-            :key="index"
-          >
-            {{ buff.text }}
-          </option>
-        </select>
-        </li>
-      </ul>
+    <div class="accordion">
+      <div class="title" @click="openAccordion">
+        <div class="title-text">
+          その他のバフ
+        </div>
+        <i class="fas fa-chevron-up" v-show="isOpen" />
+        <i class="fas fa-chevron-down" v-show="!isOpen" />
+      </div>
+      <div class="accordion-content" v-if="isOpen">
+        <div class="other-buffs">
+          <ul class="buffs-list">
+            <li
+              class="selected-buffs"
+              v-for="(buff, index) in buffs"
+              :key=index
+            >
+              <div class="buff-name">
+                {{ buff.text }}
+              </div>
+              <button @click="remove(index)">
+                <i class="fas fa-times" />
+              </button>
+            </li>
+            <li class="add-buff">
+              <select v-model="newBuff">
+                <option disabled value="">バフを追加</option>
+                <option
+                  v-for="(buff, index) in filteredAvailableBuffs"
+                  :value="buff" 
+                  :key="index"
+                >
+                  {{ buff.text }}
+                </option>
+              </select>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +85,7 @@ export default {
       newBuff: "",
       DuoEnabled: false,
       modal: false,
+      isOpen: false,
     }
   },
   props: {
@@ -102,6 +116,10 @@ export default {
     }
   },
   methods: {
+    openAccordion() {
+      this.isOpen = !this.isOpen;
+    },
+
     remove(index) {
       this.buffs.splice(index, 1);
     },
@@ -305,9 +323,22 @@ ul.buffs-list {
 }
 
 li.selected-buffs {
-  background: aqua;
-  padding: 10px 20px;
+  border: 2px solid gray;
   border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.selected-buffs > div {
+  padding: 10px 20px;
+
+}
+
+.selected-buffs button {
+  width: 15%;
+  max-width: 40px;
+  background: none;
+  color: #333;
 }
 
 .buffs-list select {
@@ -316,6 +347,37 @@ li.selected-buffs {
 
 .buff-name {
   display: inline-block;
+}
+
+.accordion {
+  margin: -10px auto 40px;
+}
+
+.title:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.title {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 2px solid gray;
+  text-align: left;
+}
+
+.title > div {
+  display: inline-block;
+  font-weight: bold;
+}
+
+.title i {
+  float: right;
+  line-height: 1.3;
+}
+
+.content {
+  padding: 0 15px;
+  margin-bottom: 10px;
 }
 
 </style>
