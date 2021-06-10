@@ -171,7 +171,9 @@ export default {
 }
 
 .attr-selector.active {
-  background-color: gray;
+  background-color: #5b6471;
+  font-weight: bold;
+  color: #eee;
 }
 
 .party-tab {
@@ -187,14 +189,14 @@ ul.tab {
   width: 90%;
   max-width: 400px;
   padding: 0;
-  border-bottom: 5px solid #74c69d;
+  border-bottom: 5px solid #5b6471;
 }
 
 li.tab-item {
   /* margin: 0 10px; */
   padding: 10px 25px;
   display: block;
-  border: 2px solid #74c69d;
+  border: 2px solid #5b6471;
   border-radius: 2px;
   cursor: pointer;
   border-bottom: none;
@@ -203,8 +205,8 @@ li.tab-item {
 }
 
 li.is-selected {
-  background-color: #74c69d;
-  /* border: 5px solid #74c69d; */
+  background-color: #5b6471;
+  /* border: 5px solid #5b6471; */
   color: #eee;
   font-weight: bold;
 }
