@@ -1,11 +1,13 @@
 <template>
-  <p>Total HP: {{ totalHitPoint }}</p>
-  <p>Total ATK: {{ totalAttack }}</p>
-  <p>attr Damage: {{ totalDamage }}</p>
-  <p>total Damage: {{ vsAttrDamage }}</p>
-  <!-- {{ partyDamageList }} -->
-  <!-- {{ vsAttr }} -->
-  <button @click="clearAll">Clear All</button>
+  <div class="result">
+    <p>HP: {{ Math.round(totalHitPoint) }}</p>
+    <!-- <p>Total ATK: {{ totalAttack }}</p> -->
+    <!-- <p>attr Damage: {{ totalDamage }}</p> -->
+    <p>Damage: {{ Math.round(vsAttrDamage) }}</p>
+    <!-- {{ partyDamageList }} -->
+    <!-- {{ vsAttr }} -->
+  </div>
+  <button class="clear" @click="clearAll">Clear All</button>
   <div class="vs-attr-container">
     <div class="vs-attr-text">
       相手属性：
@@ -15,7 +17,7 @@
         class="attr-selector"
         v-for="i in 4"
         :key="i"
-        :class="{ active: vsAttr === i-1}"
+        :class="{ active: vsAttr === i-1 }"
         @click="vsAttr = i-1"
       >
         {{ attrs[i-1] }}
@@ -38,6 +40,7 @@
     </div>
     <div class="party-member-container">
       <PartyMember 
+        class="party-member"
         v-for="i in 5"
         :key="i"
         :memberIndex="i-1"
@@ -48,7 +51,8 @@
         :magicList="staticData.magics"
         :partyMember="partyMember"
         :allAvailableBuffs="allAvailableBuffs.flat()"
-        v-show="currentMember === i"
+        :class="{'not-selected': currentMember !== i}"
+        :vsAttr="vsAttr"
         @select-card="partyMember[i-1] = $event"
         @update:HP-ATK="updateStatus(i-1, $event)"
         @update:totalDamage="updateDamage(i-1, $event)"
@@ -131,12 +135,17 @@ export default {
 
 <style scoped>
 
+.result > p {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+
 .vs-attr-container {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* justify-items: center; */
 }
 
 .vs-attr-text {
@@ -146,6 +155,7 @@ export default {
 .vs-attr {
   display: flex;
   width: 60%;
+  max-width: 300px;
   justify-content: space-between;
   align-items: center;
   margin: 20px 0;
@@ -164,21 +174,63 @@ export default {
   background-color: gray;
 }
 
+.party-tab {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 ul.tab {
   list-style: none;
   display: flex;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 400px;
+  padding: 0;
+  border-bottom: 5px solid #74c69d;
 }
 
 li.tab-item {
-  padding: 10px 20px;
+  /* margin: 0 10px; */
+  padding: 10px 25px;
   display: block;
-  border: 2px solid #eee;
-  border-radius: 10px 10px 0 0;
+  border: 2px solid #74c69d;
+  border-radius: 2px;
   cursor: pointer;
+  border-bottom: none;
+  box-sizing: content-box;
+  font-size: 1.2em;
 }
 
 li.is-selected {
-  background-color: #eee;
+  background-color: #74c69d;
+  /* border: 5px solid #74c69d; */
+  color: #eee;
+  font-weight: bold;
 }
+
+.party-member.not-selected {
+  display: none;
+}
+
+/* @media screen and (min-width: 800px) {
+
+.party-member-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  overflow-x: scroll;
+}
+
+.party-member {
+  margin: 0 30px;
+  flex: 0 0 400px;
+}
+
+.party-member.not-selected {
+  display: unset;
+}
+
+} */
 
 </style>

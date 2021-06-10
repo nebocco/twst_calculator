@@ -1,6 +1,6 @@
 <template>
 <div class="party-member">
-  <h3>カード</h3>
+  <!-- <h3>カード</h3> -->
   <button @click="clearAll">Clear</button>
   <div class="card-box">
     <div class="card-detail">
@@ -9,7 +9,7 @@
         v-model="Name"
         @change="fillDetails"
       >
-        <option value="-1">名前</option>
+        <option disabled value="-1">名前</option>
         <option 
           v-for="c in filteredCharacters"
           :key="'name-' + c.id"
@@ -25,7 +25,7 @@
         v-model="Costume"
         @change="fillDetails"
       >
-        <option value="-1">コスチューム</option>
+        <option disabled value="-1">コスチューム</option>
         <option 
           v-for="c in filteredCostumes"
           :key="'costume-' + c.id"
@@ -79,6 +79,7 @@
     :BaseAttack="Attack"
     :affectedAttack="affectedAttack"
     :allAvailableBuffs="allAvailableBuffs"
+    :vsAttr="vsAttr"
     @update:totalDamage="$emit('update:totalDamage', [i-1, $event])" 
     @update:availableBuff="updateAvailableBuff(i-1, $event)"
     @update:magicLevel="magicLevelRef[i-1] = $event"
@@ -199,6 +200,9 @@ export default {
     memberIndex: {
       type: Number,
       required: true
+    },
+    vsAttr: {
+      type: Number
     }
   },
   components: {
@@ -295,7 +299,7 @@ export default {
   border-bottom: #333 solid 3px;
 }
 
-.card-detail > select > option:first-child {
+.card-detail option:disabled {
   display: none;
 }
 

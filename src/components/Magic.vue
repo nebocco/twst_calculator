@@ -13,7 +13,15 @@
         :disabled="magicCurrent === null"
       />
     </div>
-    <p>[atk, pow, cmb, damage] : <br> {{ totalDamage }}</p>
+    <p class="damage">
+      damage: 
+      <span
+        class="damage-number"
+        :class="compatibilityTag"
+      >
+        {{ Math.round(attrDamage) }}
+      </span>
+    </p>
     <div class="magic-description">
       <dl>
         <dt>説明</dt>
@@ -33,7 +41,7 @@
     <div class="accordion">
       <div class="title" @click="openAccordion">
         <div class="title-text">
-          その他のバフ
+          その他のバフ ({{ buffs.length }})
         </div>
         <i class="fas fa-chevron-up" v-show="isOpen" />
         <i class="fas fa-chevron-down" v-show="!isOpen" />
@@ -113,7 +121,8 @@ export default {
     magicIndex: {
       type: Number,
       required: true
-    }
+    },
+    vsAttr: Number
   },
   methods: {
     openAccordion() {
@@ -223,6 +232,51 @@ export default {
       const affectedCombo = this.DuoEnabled && this.DuoUsable ? 3 : this.magicCurrent.magic.combo;
       const combo = (1 - 0.1 * (affectedCombo - 1)) * affectedCombo; 
       return [attack, power, combo, attack * power * combo];
+    },
+    attrDamage() {
+      if (this.magicCurrent === null) {
+        return 0;
+      }
+      else {
+        let damage = this.totalDamage[3];
+        let self_attr = this.magicCurrent.magic.attr;
+        if (self_attr == 3) {
+          return damage * 1.2;
+        } else if (self.compatiblity == 1) {
+          return damage * 1.5;
+        } else if (self.compatiblity == -1) {
+          return damage * 0.5;
+        } else {
+          return damage;
+        }
+      }
+    },
+    compatibility() {
+      if (this.magicCurrent === null) {
+        return 0;
+      }
+      else {
+        let self_attr = this.magicCurrent.magic.attr;
+        let opp_attr = this.vsAttr;
+        if (self_attr == 3) {
+          return 0;
+        } else if ((self_attr + 2) % 3 == opp_attr) {
+          return 1;
+        } else if ((self_attr + 1) % 3 == opp_attr) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    },
+    compatibilityTag() {
+      if (this.compatibility === 1) {
+        return "compatible"
+      } else if (this.compatibility === -1) {
+        return "incompatible"
+      } else {
+        return ""
+      }
     }
   },
   watch: {
@@ -232,7 +286,12 @@ export default {
           damage: this.totalDamage[3],
           attr: this.magicCurrent.magic.attr
         });
-      } 
+      } else {
+        this.$emit('update:totalDamage', {
+          damage: 0,
+          attr: 0
+        });
+      }
     },
     newBuff() {
       if (this.newBuff !== "") {
@@ -378,6 +437,14 @@ li.selected-buffs {
 .content {
   padding: 0 15px;
   margin-bottom: 10px;
+}
+
+.damage-number.compatible {
+  color: #c47278;
+}
+
+.damage-number.incompatible {
+  color: #72a7c4;
 }
 
 </style>
