@@ -1,5 +1,4 @@
 <template>
-  <h3>バディ</h3>
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>

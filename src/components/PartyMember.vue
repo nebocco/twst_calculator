@@ -1,7 +1,9 @@
 <template>
 <div class="party-member">
   <!-- <h3>カード</h3> -->
-  <button @click="clearAll">Clear</button>
+  <div class="button-container">
+    <button class="clear" @click="clearAll">Clear</button>
+  </div>
   <div class="card-box">
     <div class="card-detail">
       <select
@@ -58,6 +60,7 @@
       >
     </div>
   </div>
+  <h3>バディ</h3>
   <Buddy
     ref="buddy"
     :buddies="Buddies"
@@ -276,6 +279,31 @@ export default {
 </script>
 
 <style scoped>
+
+.button-container {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+}
+
+button.clear {
+  font-size: 1rem;
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  color: red;
+  border: 2px solid red;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+h3 {
+  margin-top: 2rem;
+}
 
 .party-member {
   width: 90%;

@@ -37,7 +37,7 @@
           <label for="hit-point">HP</label>
           <input
             type="number"
-            value="0"
+            value="5408"
             disabled
           >
         </div>
@@ -45,7 +45,7 @@
           <label for="attack">ATK</label>
           <input
             type="number"
-            value="0"
+            value="5133"
             disabled
           >
         </div>
@@ -109,7 +109,7 @@
           />
         </div>
         <p class="damage">
-          damage: <span class="damage-number"> 0 </span>
+          damage: <span class="damage-number"> 8315 </span>
         </p>
         <div class="magic-description">
           <dl>

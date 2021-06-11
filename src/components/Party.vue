@@ -7,7 +7,9 @@
     <!-- {{ partyDamageList }} -->
     <!-- {{ vsAttr }} -->
   </div>
-  <button class="clear" @click="clearAll">Clear All</button>
+  <div class="button-container">
+    <button class="clear" @click="clearAll">Clear All</button>
+  </div>
   <div class="vs-attr-container">
     <div class="vs-attr-text">
       相手属性：
@@ -135,6 +137,27 @@ export default {
 
 <style scoped>
 
+.button-container {
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+}
+
+button.clear {
+  font-size: 1rem;
+  display: inline-block;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  color: red;
+  border: 2px solid red;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
 .result > p {
   font-weight: bold;
   font-size: 1.2em;
@@ -163,8 +186,21 @@ export default {
 
 .attr-selector {
   padding: 10px 15px;
-  border: 2px solid black;
+  border: 2px solid #5b6471;
 }
+
+.attr-selector:nth-child(1) {
+  background: #fee;
+}
+
+.attr-selector:nth-child(2) {
+  background: #eef;
+}
+
+.attr-selector:nth-child(3) {
+  background: #efe;
+}
+
 
 .attr-selector:hover {
   cursor: pointer;
@@ -187,21 +223,26 @@ ul.tab {
   display: flex;
   justify-content: space-between;
   width: 90%;
-  max-width: 400px;
   padding: 0;
   border-bottom: 5px solid #5b6471;
 }
 
 li.tab-item {
-  /* margin: 0 10px; */
   padding: 10px 25px;
+  flex: 1;
   display: block;
   border: 2px solid #5b6471;
-  border-radius: 2px;
   cursor: pointer;
   border-bottom: none;
-  box-sizing: content-box;
   font-size: 1.2em;
+}
+
+li.tab-item:first-child {
+  border-top-left-radius: .4em;
+}
+
+li.tab-item:last-child {
+  border-top-right-radius: .4em;
 }
 
 li.is-selected {
