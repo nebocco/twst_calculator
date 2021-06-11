@@ -113,12 +113,20 @@ export default {
 
 <style scoped>
 
-th {
-  color: #667;
+tr, td, th {
+  border: none;
+  background: none;
 }
 
-tr > td {
+th {
+  color: #667;
+  border-bottom: 2px solid #114;
+}
+
+td {
   color: #aaa;
+  border-bottom: 1px solid #ddd;
+  padding: .2em 0;
 }
 
 tr.buddy-enabled > td {
@@ -126,35 +134,27 @@ tr.buddy-enabled > td {
   color: #114;
 }
 
-tr > td:last-child {
-  width: 20%;
-}
-
-tr > td:first-child {
+td:first-child {
   width: 30%;
 }
 
-tr, td, th {
-  border: none;
-  background: none;
+td:last-child {
+  width: 20%;
 }
 
-td {
-  border-bottom: 1px solid #ddd;
-  padding: .2em 0;
-}
-
-th {
-  border-bottom: 2px solid #114;
-}
-
-td > label {
+label {
   margin: 0;
 }
 
 input {
   width: 100%;
   background: #fafbfc;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  text-align: end;
 }
 
 input[disabled] {
@@ -165,16 +165,6 @@ input[disabled] {
 input:invalid {
   border-color: red;
   background: #eecccc;
-}
-
-
-td > input {
-  padding: 0.2em 0.4em;
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  background: none;
-  text-align: end;
 }
 
 </style>

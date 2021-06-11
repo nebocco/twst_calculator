@@ -372,10 +372,6 @@ input:invalid {
   background: #eecccc;
 }
 
-input:invalid::before {
-  content: "0100101";
-}
-
 ul.buffs-list {
   list-style: none;
   padding-left: 0;

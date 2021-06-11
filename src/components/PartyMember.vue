@@ -313,7 +313,8 @@ export default {
 
 .status-each > label {
   min-width: 3em;
-  margin-right: 1em;
+  margin-top: .5em;
+  margin-bottom: 0;
 }
 
 .status-each > input {
