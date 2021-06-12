@@ -1,14 +1,14 @@
 <template>
   <header>
     <h1>
-      計算機
+      ツイステ計算機
     </h1>
     <i 
       class="far fa-question-circle"
-      @click="$refs.modal.show()"
+      @click="$refs.help_modal.show()"
     />
   </header>
-  <HelpModal ref="modal" />
+  <HelpModal ref="help_modal" />
 </template>
 
 <script>
@@ -30,6 +30,7 @@ header {
 }
 
 h1 {
+  font-size: 2em;
   margin: 0;
 }
 

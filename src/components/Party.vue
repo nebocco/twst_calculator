@@ -55,10 +55,13 @@
         :allAvailableBuffs="allAvailableBuffs.flat()"
         :class="{'not-selected': currentMember !== i}"
         :vsAttr="vsAttr"
+        :savedData="savedData"
         @select-card="partyMember[i-1] = $event"
         @update:HP-ATK="updateStatus(i-1, $event)"
         @update:totalDamage="updateDamage(i-1, $event)"
         @update:availableBuff="updateAvailableBuff(i-1, $event)"
+        @update:savedData="saveData($event)"
+        @delete-data="deleteData($event)"
       />
     </div>
   </div>
@@ -80,7 +83,8 @@ export default {
       partyDamageList: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       allAvailableBuffs: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       attrs: ["火", "水", "木", "無"],
-      vsAttr: 3
+      vsAttr: 3,
+      savedData: {},
    }
   },
   components: {
@@ -102,7 +106,24 @@ export default {
       for (let i = 0; i < 5; ++i) {
         this.$refs["member" + i].clearAll();
       }
+    },
+    loadStorage() {
+      if (localStorage.getItem('savedMembers')) {
+        let members = JSON.parse(localStorage.getItem('savedMembers'));
+        this.savedData = members;
+      }
+    },
+    saveData([name, data]) {
+      this.savedData[name] = data;
+      localStorage.setItem('savedMembers', JSON.stringify(this.savedData));
+    },
+    deleteData(name) {
+      delete this.savedData[name];
+      localStorage.setItem('savedMembers', JSON.stringify(this.savedData));
     }
+  },
+  mounted() {
+    this.loadStorage();
   },
   computed: {
     totalHitPoint() {
@@ -143,19 +164,18 @@ export default {
   justify-content: center;
 }
 
-button.clear {
+button {
+  padding: .4em 1.2em;
   font-size: 1rem;
-  display: inline-block;
-  padding: 6px 12px;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
   background: none;
-  color: red;
-  border: 2px solid red;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
+  color: #cb1b45;
+  border: 2px solid #cb1b45;
 }
 
 .result > p {

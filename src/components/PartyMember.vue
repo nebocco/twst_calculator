@@ -2,7 +2,19 @@
 <div class="party-member">
   <!-- <h3>カード</h3> -->
   <div class="button-container">
-    <button class="clear" @click="clearAll">Clear</button>
+    <button class="red" @click="clearAll">Clear</button>
+    <button class="green" @click="$refs.save_modal.show()">Save</button>
+    <button class="green" @click="$refs.load_modal.show()">Load</button>
+    <SaveModal ref="save_modal"
+      :initialName="cardDisplayName"
+      @save-data="saveData($event)"
+    />
+    <LoadModal
+      ref="load_modal"
+      :savedDataNames="Object.keys(savedData)"
+      @load-data="loadData($event)"
+      @delete-data="$emit('delete-data', $event)"
+    />
   </div>
   <div class="card-box">
     <div class="card-detail">
@@ -93,6 +105,8 @@
 <script>
 import Buddy from './Buddy.vue'
 import Magic from './Magic.vue'
+import SaveModal from './SaveModal'
+import LoadModal from './LoadModal'
 
 export default {
   name: 'PartyMember',
@@ -120,6 +134,7 @@ export default {
       this.Magics = card.magics;
       this.$emit('select-card', this.Name);
     },
+    
     updateAvailableBuff(index, buff) {
       if (this.Name < 0 || this.Costume < 0) {
         return;
@@ -145,20 +160,23 @@ export default {
       this.$refs.magic2.clearAll();
       this.$refs.buddy.clearAll();
     },
+    unpackData(member) {
+      this.Name = member.name;
+      this.Costume = member.costume;
+      this.HitPoint = member.hp;
+      this.Attack = member.atk;
+      this.fillDetails();
+      this.$refs.buddy.loadStorage(member.buddyLevel);
+      this.$refs.magic1.loadStorage(member.magicLevel[0]);
+      this.$refs.magic2.loadStorage(member.magicLevel[1]);
+    },
     loadStorage() {
       if (localStorage.getItem('currentMembers')) {
         let members = JSON.parse(localStorage.getItem('currentMembers'));
         try {
           const member = members[this.memberIndex];
           if (member) {
-            this.Name = member.name;
-            this.Costume = member.costume;
-            this.HitPoint = member.hp;
-            this.Attack = member.atk;
-            this.fillDetails();
-            this.$refs.buddy.loadStorage(member.buddyLevel);
-            this.$refs.magic1.loadStorage(member.magicLevel[0]);
-            this.$refs.magic2.loadStorage(member.magicLevel[1]);
+            this.unpackData(member);
           }
         } catch(e) {
           members[this.memberIndex] = null;
@@ -172,6 +190,15 @@ export default {
       let members = JSON.parse(localStorage.getItem('currentMembers'))
       members[this.memberIndex] = this.characterSaveData;
       localStorage.setItem('currentMembers', JSON.stringify(members))
+    },
+    loadData(saveName) {
+      let data = this.savedData[saveName];
+      if (data) {
+        this.unpackData(data);
+      }
+    },
+    saveData(saveName) {
+      this.$emit('update:savedData', [saveName, this.characterSaveData])
     }
   },
   props: {
@@ -205,11 +232,14 @@ export default {
     },
     vsAttr: {
       type: Number
-    }
+    },
+    savedData: Object,
   },
   components: {
     Buddy,
-    Magic
+    Magic,
+    SaveModal,
+    LoadModal
   },
   computed: {
     filteredCharacters() {
@@ -236,6 +266,17 @@ export default {
       return table;
     },
 
+    cardDisplayName() {
+      if(this.Name < 0 || this.Costume < 0) {
+        return ""
+      }
+      const card = this.cardList[this.cardReverseIndex[this.Name][this.Costume]];
+      return this.characterList[card.name].name 
+        + "【" 
+        + this.costumeList[card.costume].name
+        + "】"
+    },
+
     affectedHitPoint() {
       return Math.floor(this.HitPoint * (1 + this.buffsBuddy[1]))
     },
@@ -253,7 +294,7 @@ export default {
         buddyLevel: this.buddyLevelRef,
         magicLevel: this.magicLevelRef,
       }
-    }
+    },
   },
   mounted() {
     this.loadStorage();
@@ -293,8 +334,8 @@ button.clear {
   text-decoration: none;
   white-space: nowrap;
   background: none;
-  color: red;
-  border: 2px solid red;
+  color: #cb1b45;
+  border: 2px solid #cb1b45;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
@@ -353,6 +394,35 @@ h3 {
   color: #333;
   border-bottom: #333 solid 3px;
   text-align: right;
+}
+
+.button-container {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin: .8em auto 1.2em;
+}
+
+button {
+  padding: .4em 1.2em;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+button.green {
+  color: #3a8fb7;
+  border: 2px solid #3a8fb7;
+}
+
+button.red {
+  color: #cb1b45;
+  border: 2px solid #cb1b45;
 }
 
 </style>
