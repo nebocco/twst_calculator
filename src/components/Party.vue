@@ -1,9 +1,9 @@
 <template>
   <div class="result">
-    <p>HP: {{ Math.round(totalHitPoint) }}</p>
+    <p>total HP: {{ Math.round(totalHitPoint) }}</p>
     <!-- <p>Total ATK: {{ totalAttack }}</p> -->
     <!-- <p>attr Damage: {{ totalDamage }}</p> -->
-    <p>Damage: {{ Math.round(vsAttrDamage) }}</p>
+    <p>total Damage: {{ Math.round(vsAttrDamage) }}</p>
     <!-- {{ partyDamageList }} -->
     <!-- {{ vsAttr }} -->
   </div>

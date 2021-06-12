@@ -140,7 +140,6 @@ export default {
       this.Magics = [];
       this.buffsBuddy = [0, 0];
       this.availableBuff = [{}, {}];
-      console.log("main cleared.")
 
       this.$refs.magic1.clearAll();
       this.$refs.magic2.clearAll();

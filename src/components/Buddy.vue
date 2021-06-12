@@ -23,7 +23,8 @@
           :name="'buddy-' + memberIndex + index"
           :disabled="!buddyEnabled[index]"
           @input="$emit('update:buffsBuddy', buffs)"
-          @blur="buddyLevel[index] = Math.max(1, Math.min(10, buddyLevel[index]))"
+          @focus="buddyLevel[index] = ''"
+          @blur="buddyLevel[index] = Math.min(10, Math.max(1, buddyLevel[index]))"
         >
       </td>
     </tr>
@@ -81,8 +82,10 @@ export default {
       let res = [0, 0]; // atk, hp
       this.buddies.forEach((buddy, index) => {
         if(this.buddyEnabled[index]) {
-          res[Math.floor(buddy[1] / 2)] += 
-            0.1 * (buddy[1] % 2 + 1) + 0.005 * (buddy[1] % 2 + 2) * this.buddyLevel[index];
+          for (let i = 0; i < 4; i++) {
+            res[Math.floor(i / 2)] += 
+              0.1 * (i % 2 + 1) + 0.005 * (i % 2 + 2) * this.buddyLevel[index] * (buddy[1] >> i & 1);
+          }
         }
       });
       return res;
@@ -147,12 +150,11 @@ label {
 
 input {
   width: 100%;
-  background: #fafbfc;
   padding: 0.2em 0.4em;
   margin: 0;
-  border: none;
-  border-radius: 0;
   background: none;
+  border: 1px solid #c5c5de;
+  border-radius: 0;
   text-align: end;
 }
 

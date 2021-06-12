@@ -9,7 +9,8 @@
         v-model.number="magicLevel"
         min="1"
         max="10"
-        @blur="magicLevel = Math.max(1, Math.min(10, magicLevel))"
+        @focus="magicLevel=''"
+        @blur="magicLevel = Math.min(10, Math.max(1, magicLevel))"
         :disabled="magicCurrent === null"
       />
     </div>
@@ -242,9 +243,9 @@ export default {
         let self_attr = this.magicCurrent.magic.attr;
         if (self_attr == 3) {
           return damage * 1.2;
-        } else if (self.compatiblity == 1) {
+        } else if (this.compatibility == 1) {
           return damage * 1.5;
-        } else if (self.compatiblity == -1) {
+        } else if (this.compatibility == -1) {
           return damage * 0.5;
         } else {
           return damage;
@@ -359,7 +360,10 @@ label {
 
 input {
   width: 20%;
-  text-align: right;
+  background: none;
+  border: 1px solid #c5c5de;
+  border-radius: 0;
+  text-align: end;
 }
 
 input[disabled] {
@@ -435,12 +439,16 @@ li.selected-buffs {
   margin-bottom: 10px;
 }
 
+.damage-number {
+  font-weight: 600;
+}
+
 .damage-number.compatible {
-  color: #c47278;
+  color: #cb1b45;
 }
 
 .damage-number.incompatible {
-  color: #72a7c4;
+  color: #3a8fb7;
 }
 
 </style>
