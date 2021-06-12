@@ -9,7 +9,6 @@
   <i class="fas fa-times" @click="hide" />
   <div class="modal-text">
     <div class="modal-head">
-      
     </div>
 
     <h3>説明</h3>
@@ -22,7 +21,7 @@
     <div class="text">
     <ol>
       <li>
-        カードの基本情報を入力します。
+        上部の数字タブで枠を選択し、カードの基本情報を入力します。
       </li>
     </ol>
 
@@ -58,7 +57,6 @@
           >
         </div>
       </div>
-
     </div>
 
     <ol start="2">
@@ -130,7 +128,6 @@
             </dd>
           </dl>
         </div>
-
       </div>
     </div>
 
@@ -231,7 +228,6 @@
     <div class="text acknowledge">
       当ブログは基本的にリンクフリーです。リンクを行う場合の許可や連絡は不要です。
     </div>
-
   </div>
   </div>
   </div>
