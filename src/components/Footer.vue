@@ -1,6 +1,8 @@
 <template>
   <footer>
-    nebocco
+    <small>
+      &copy; 2021 nebocco All Rights Reserved.
+    </small>
   </footer>
 </template>
 

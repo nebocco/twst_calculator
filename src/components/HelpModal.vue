@@ -9,9 +9,17 @@
   <i class="fas fa-times" @click="hide" />
   <div class="modal-text">
     <div class="modal-head">
-      <h3>使い方</h3>
+      
     </div>
 
+    <h3>説明</h3>
+    <div class="text">
+
+    当サイトは、スマホゲーム「<a href="https://twisted-wonderland.aniplex.co.jp/">ツイステッドワンダーランド</a>」（ツイステ）の攻略に役立つツールを提供しています。
+    </div>
+
+    <h3>使い方</h3>
+    <div class="text">
     <ol>
       <li>
         カードの基本情報を入力します。
@@ -161,35 +169,49 @@
         </div>
       </div>
     </div>
-    
-    
-    <!-- <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br> -->
+    </div>
+  
     <h4>注意</h4>
-    <ul>
-      <li>
-        バフ・デバフの効果は、自身へのATK UP・ダメージ UPのみを計算対象に入れています。
-      </li>
-      <li>
-        バディレベルは現在有効なもののみが入力可能で、
-        「その他のバフ」で選択できるのは味方の魔法によって発動されるものだけです。
-        そのため、最初に5人分の基本情報を入力してから以降の欄を埋めることをおすすめします。
-      </li>
-      <li>
-        より詳細な使い方は作者ブログで公開しています。
-      </li>
-      <li>
-        分からないことやバグの報告、改善してほしい箇所などあれば作者Twitter()までお気軽にご連絡ください。
-      </li>
-    </ul> 
+    <div class="text">
+      <ul>
+        <li>
+          バフ・デバフの効果は、自身へのATK UP・ダメージ UPのみを計算対象に入れています。
+        </li>
+        <li>
+          バディレベルは現在有効なもののみが入力可能で、
+          「その他のバフ」で選択できるのは味方の魔法によって発動されるものだけです。
+          そのため、最初に5人分の基本情報を入力してから以降の欄を埋めることをおすすめします。
+        </li>
+        <li>
+          より詳細な使い方は<a href="https://nebocco.hatenablog.com/">作者ブログ</a>で公開しています。
+        </li>
+        <li>
+          分からないことやバグの報告、改善してほしい箇所などあれば作者までお気軽にご連絡ください。
+        </li>
+      </ul> 
+    </div>
+
+    <h3>お問い合わせ</h3>
+    <div class="text">
+      <dl class="list-table">
+        <dt>作者</dt>
+        <dd>nebocco</dd>
+        <dt>Twitter</dt>
+        <dd><a href="https://twitter.com/nebocco27">@nebocco27</a></dd>
+        <dt>ブログ</dt>
+        <dd><a href="https://nebocco.hatenablog.com/">はてなブログ</a></dd>
+      </dl>
+    </div>
+
+    <h3>謝辞</h3>
+    <div class="text acknowledge">
+      本サイト制作にあたり、以下のサイト・ツールを参考にさせていただきました。
+      <ul>
+        <li><a href="https://gamerch.com/twisted-wonderland/">ツイステ攻略wiki</a></li>
+        <li><a href="https://twst.wikiru.jp/">ツイステッドワンダーランド(ツイステ)攻略 Wiki</a></li>
+        <li><a href="https://note.com/inuneko6928/n/nd7137dba0b68">ツイステ ダメージ計算ツール</a></li>
+      </ul>
+    </div>
   </div>
   </div>
   </div>
@@ -238,7 +260,7 @@ export default {
 
 .modal-container {
   background-color: white;
-  width: 85%;
+  width: 90%;
   max-width: 900px;
   height: 90%;
   border-radius: 8px;
@@ -260,7 +282,7 @@ export default {
 .modal-text {
   height: auto;
   max-height: 100%;
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   overflow: auto;
 }
@@ -284,6 +306,48 @@ li {
   text-align: left;
 }
 
+.text {
+  margin: 1em auto 3em;
+}
+
+
+
+.list-table {
+  width: 60%;
+  min-width: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+
+.list-table > dt,
+.list-table > dd {
+  padding: .4em 1em;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.list-table > dt {
+  font-weight: bold;
+  color: #5b6471;
+  width: 40%;
+  margin-bottom: .2em;
+}
+
+.list-table > dd {
+  width: 60%;
+}
+
+.list-table > dd::before {
+  content: "";
+}
+
+.acknowledge ul {
+  width: 60%;
+  min-width: 240px;
+  margin: 0 auto;
+}
 
 /* example */
 
