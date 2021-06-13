@@ -20,7 +20,7 @@
         v-for="i in 4"
         :key="i"
         :class="{ active: vsAttr === i-1 }"
-        @click="vsAttr = i-1"
+        @click="if (vsAttr === i-1) { vsAttr = 4; } else { vsAttr = i-1; }"
       >
         {{ attrs[i-1] }}
       </div>
@@ -83,7 +83,7 @@ export default {
       partyDamageList: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       allAvailableBuffs: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       attrs: ["火", "水", "木", "無"],
-      vsAttr: 3,
+      vsAttr: 4,
       savedData: {},
    }
   },
@@ -102,6 +102,10 @@ export default {
       this.allAvailableBuffs[index] = buffs
     },
     clearAll() {
+      if (!confirm("現在の入力をすべて削除しますか？")) {
+        return;
+      }
+      
       this.currentMember = 1;
       for (let i = 0; i < 5; ++i) {
         this.$refs["member" + i].clearAll();
@@ -141,7 +145,7 @@ export default {
     },
     vsAttrDamage() {
       let total = this.totalDamage[3] * 1.1;
-      if (this.vsAttr == 3) {
+      if (this.vsAttr >= 3) {
         total += this.totalDamage[0]
         + this.totalDamage[1]
         + this.totalDamage[2];
