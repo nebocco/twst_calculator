@@ -161,6 +161,9 @@ export default {
       this.$refs.buddy.clearAll();
     },
     unpackData(member) {
+      if (!this.cardReverseIndex[member.name][member.costume]) {
+        return;
+      }
       this.Name = member.name;
       this.Costume = member.costume;
       this.HitPoint = member.hp;
@@ -191,8 +194,9 @@ export default {
       members[this.memberIndex] = this.characterSaveData;
       localStorage.setItem('currentMembers', JSON.stringify(members))
     },
-    loadData(saveName) {
-      let data = this.savedData[saveName];
+    loadData(savedName) {
+      let data = this.savedData[savedName];
+      console.log(savedName, data)
       if (data) {
         this.unpackData(data);
       }
