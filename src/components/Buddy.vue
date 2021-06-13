@@ -1,4 +1,6 @@
 <template>
+  {{ buffs }}
+  {{ buddiesExtended }}
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>
@@ -13,7 +15,8 @@
       <td>
         {{ buddy[0] == -1 ? "" : characterList[buddy[0]].name }}
       </td>
-      <td>{{ buddy[0] == -1 ? "" : effectText[buddy[1]]}}</td>
+      <td>
+        {{ effectText[index] }}</td>
       <td>
         <input 
           type="number"
@@ -35,7 +38,7 @@
 export default {
   data() {
     return {
-      effectText: [
+      effectTextBase: [
         "ATK UP（小）",
         "ATK UP（中）",
         "HP UP（小）",
@@ -84,7 +87,9 @@ export default {
         if(this.buddyEnabled[index]) {
           for (let i = 0; i < 4; i++) {
             res[Math.floor(i / 2)] += 
-              0.1 * (i % 2 + 1) + 0.005 * (i % 2 + 2) * this.buddyLevel[index] * (buddy[1] >> i & 1);
+              (buddy[1] >> i & 1) == 0 ? 0 :
+              0.1 * (i % 2 + 1)
+              + 0.005 * ((i == 1) + 2) * this.buddyLevel[index];
           }
         }
       });
@@ -95,6 +100,20 @@ export default {
         buddy[0] !== -1 && this.partyMember.includes(buddy[0])
       )
     },
+    effectText() {
+      let text = this.buddiesExtended
+      .map((buddy) => {
+        if (buddy[0] == -1) { return ""; }
+        let t = []
+        for (let i = 0; i < 4; ++i) {
+          if (buddy[1] >> i & 1) {
+            t.push(this.effectTextBase[i])
+          }
+        }
+        return t.join("&")
+      })
+      return text;
+    }
   },
   watch: {
     buffs: {
