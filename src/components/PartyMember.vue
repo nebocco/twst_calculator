@@ -93,7 +93,7 @@
     :magicList="magicList"
     :BaseAttack="Attack"
     :affectedAttack="affectedAttack"
-    :allAvailableBuffs="allAvailableBuffs"
+    :allAvailableBuffs="allAvailableBuffs[i-1]"
     :vsAttr="vsAttr"
     @update:totalDamage="$emit('update:totalDamage', [i-1, $event])" 
     @update:availableBuff="updateAvailableBuff(i-1, $event)"
@@ -139,12 +139,17 @@ export default {
       if (this.Name < 0 || this.Costume < 0) {
         return;
       }
-      if(buff.text !== "") {
-        buff.text += "（" + this.characterList[this.Name].name +
-          "【" + this.costumeList[this.Costume].name + "】）"
-      }
+      buff.text += "（" + this.characterList[this.Name].name +
+        "【" + this.costumeList[this.Costume].name + "】）"
       this.availableBuff[index] = buff;
-      this.$emit('update:availableBuff', this.availableBuff);
+      let emitBuff = this.availableBuff.map(buff => {
+        if (buff.text && buff.text.includes("選択")) {
+          return buff;
+        } else {
+          return {};
+        }
+      });
+      this.$emit('update:availableBuff', emitBuff);
     },
     clearAll() {
       this.Name = -1;
@@ -226,7 +231,7 @@ export default {
       type: Array,
       required: true
     },
-    allAvailableBuffs: {
+    AvailableBuffs: {
       type: Array,
       required: true
     },
@@ -268,6 +273,13 @@ export default {
         table[card.name][card.costume] = index;
       })
       return table;
+    },
+    allAvailableBuffs() {
+      let buff1 = this.AvailableBuffs.slice();
+      let buff2 = this.AvailableBuffs.slice();
+      buff1.push(this.availableBuff[1]);
+      buff2.push(this.availableBuff[0]);
+      return [buff1, buff2];
     },
 
     cardDisplayName() {

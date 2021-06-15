@@ -42,9 +42,10 @@
     </div>
     <div class="party-member-container">
       <PartyMember 
-        class="party-member"
+        class="party-member-each"
         v-for="i in 5"
         :key="i"
+        :class="{'not-selected': currentMember !== i}"
         :memberIndex="i-1"
         :ref="'member' + (i-1)"
         :characterList="staticData.characters"
@@ -52,8 +53,9 @@
         :cardList="staticData.cards"
         :magicList="staticData.magics"
         :partyMember="partyMember"
-        :allAvailableBuffs="allAvailableBuffs.flat()"
-        :class="{'not-selected': currentMember !== i}"
+        :AvailableBuffs="
+          AvailableBuffs.slice(0, i-1).concat(AvailableBuffs.slice(i, 5)).flat()
+        "
         :vsAttr="vsAttr"
         :savedData="savedData"
         @select-card="partyMember[i-1] = $event"
@@ -81,7 +83,7 @@ export default {
       partyHitPointList: [0, 0, 0, 0, 0],
       partyAttackList: [0, 0, 0, 0, 0],
       partyDamageList: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
-      allAvailableBuffs: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
+      AvailableBuffs: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       attrs: ["火", "水", "木", "無"],
       vsAttr: 4,
       savedData: {},
@@ -99,7 +101,7 @@ export default {
       this.partyDamageList[index][event[0]] = event[1];
     },
     updateAvailableBuff(index, buffs) {
-      this.allAvailableBuffs[index] = buffs
+      this.AvailableBuffs[index] = buffs
     },
     clearAll() {
       if (!confirm("現在の入力をすべて削除しますか？")) {
@@ -276,7 +278,7 @@ li.is-selected {
   font-weight: bold;
 }
 
-.party-member.not-selected {
+.party-member-each.not-selected {
   display: none;
 }
 

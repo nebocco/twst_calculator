@@ -1,5 +1,4 @@
 <template>
-  {{ buffs }}
   <table class="buddy-lis">
     <tr>
       <th>キャラ</th>
