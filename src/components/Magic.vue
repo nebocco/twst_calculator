@@ -70,7 +70,7 @@
                   :value="buff" 
                   :key="index"
                 >
-                  {{ buff.text }}
+                  {{ buff.text + "（" + buff.from + "）"}}
                 </option>
               </select>
             </li>
@@ -133,6 +133,13 @@ export default {
     remove(index) {
       this.buffs.splice(index, 1);
     },
+    removeExceptUP(buff) {
+      return {
+        text: buff.text.split('&').filter(t => t.includes("UP")).join('&'),
+        level: buff.level,
+        from: buff.from
+      }
+    },
     clearAll() {
       this.magicLevel = 1;
       this.buffs = [];
@@ -153,12 +160,6 @@ export default {
         magic: this.magicList[this.magic[index][0]],
         text: this.magic[index][1]
       }
-      if (mc !== null && mc.text.includes("UP")) {
-        this.$emit('update:availableBuff', {
-          text: mc.text,
-          level: level
-        });
-      }
       return mc
     },
     DuoUsable() {
@@ -166,7 +167,10 @@ export default {
     },
 
     filteredAvailableBuffs() {
-      return this.allAvailableBuffs.filter(buff => buff.text);
+      return this.allAvailableBuffs
+      .filter(buff => buff.text)
+      .map(buff => this.removeExceptUP(buff))
+      .filter(buff => buff.text !== "")
     },
     
     BuffAttack() {
@@ -174,10 +178,10 @@ export default {
         return 0;
 
       let totalBuff = 0;
-      const current = {
+      const current = this.removeExceptUP({
         text: this.magicCurrent.text,
         level: this.magicLevel
-      }
+      });
 
       this.buffs
       .concat(current)
@@ -199,10 +203,10 @@ export default {
         return 0;
 
       let totalBuff = 0;
-      const current = {
+      const current = this.removeExceptUP({
         text: this.magicCurrent.text,
         level: this.magicLevel
-      }
+      });
 
       this.buffs
       .concat(current)
@@ -302,6 +306,17 @@ export default {
     },
     magicLevel() {
       this.$emit("update:magicLevel", this.magicLevel);
+    },
+    magicCurrent() {
+      console.log("update:availableBuff", this.memberIndex);
+      if (this.magicCurrent !== null && this.magicCurrent.text.includes("UP")) {
+        this.$emit('update:availableBuff', {
+          text: this.magicCurrent.text,
+          level: this.magicLevel
+        });
+      } else {
+        this.$emit('update:availableBuff', {});
+      }
     }
   }
 }

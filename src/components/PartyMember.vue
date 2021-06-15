@@ -139,8 +139,11 @@ export default {
       if (this.Name < 0 || this.Costume < 0) {
         return;
       }
-      buff.text += "（" + this.characterList[this.Name].name +
-        "【" + this.costumeList[this.Costume].name + "】）"
+      if (buff.text) {
+        buff.from = this.characterList[this.Name].name +
+          "【" + this.costumeList[this.Costume].name + "】"
+      }
+      console.log(buff)
       this.availableBuff[index] = buff;
       let emitBuff = this.availableBuff.map(buff => {
         if (buff.text && buff.text.includes("選択")) {
