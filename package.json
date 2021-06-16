@@ -2,7 +2,6 @@
   "name": "twst-simulator",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -12,7 +11,6 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "express": "^4.17.1",
-    "heroku-ssl-redirect": "^0.1.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {
