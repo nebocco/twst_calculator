@@ -387,7 +387,7 @@ li {
   border: none;
   border-radius: 0;
   color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: #5b6471 solid 3px;
   opacity: unset;
 }
 
@@ -412,7 +412,7 @@ li {
   border: none;
   border-radius: 0;
   color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: #5b6471 solid 3px;
   text-align: right;
   opacity: unset;
 }
@@ -427,8 +427,8 @@ li {
 }
 
 .help-example-2 th {
-  color: #667;
-  border-bottom: 2px solid #114;
+  color: #5b6471;
+  border-bottom: 2px solid #5b6471;
 }
 
 .help-example-2 td {
@@ -439,7 +439,7 @@ li {
 
 .help-example-2 tr.buddy-enabled > td {
   font-weight: bold;
-  color: #114;
+  color: #333;
 }
 
 .help-example-2 td:last-child {
@@ -540,7 +540,7 @@ li {
 }
 
 .help-example-4 li.selected-buffs {
-  border: 2px solid gray;
+  border: 2px solid #5b6471;
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -572,7 +572,7 @@ li {
 .help-example-4 .title {
   margin-bottom: 10px;
   padding: 10px;
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid #5b6471;
   text-align: left;
 }
 

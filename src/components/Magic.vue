@@ -9,7 +9,10 @@
         v-model.number="magicLevel"
         min="1"
         max="10"
-        @focus="{ levelStash = magicLevel; magicLevel=''; }"
+        @focus="
+          levelStash = magicLevel;
+          magicLevel='';
+        "
         @blur="magicLevel = magicLevel === '' ? levelStash : Math.min(10, Math.max(1, magicLevel))"
         :disabled="magicCurrent === null"
       />
@@ -401,6 +404,7 @@ input {
   border: 1px solid #c5c5de;
   border-radius: 0;
   text-align: end;
+  display: inline;
 }
 
 
@@ -420,7 +424,7 @@ ul.buffs-list {
 }
 
 li.selected-buffs {
-  border: 2px solid gray;
+  border: 2px solid #5b6471;
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -458,7 +462,7 @@ li.selected-buffs {
 .title {
   margin-bottom: 10px;
   padding: 10px;
-  border-bottom: 2px solid gray;
+  border-bottom: 2px solid #5b6471;
   text-align: left;
 }
 

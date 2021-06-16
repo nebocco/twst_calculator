@@ -390,7 +390,7 @@ h3 {
   border: none;
   border-radius: 0;
   color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: #5b6471 solid 2px;
 }
 
 .card-detail option:disabled {
@@ -418,7 +418,7 @@ h3 {
   border: none;
   border-radius: 0;
   color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: #5b6471 solid 2px;
   text-align: right;
 }
 
