@@ -1,6 +1,13 @@
 <template>
   <div class="result">
-    <p>total HP: {{ Math.round(totalHitPoint) }}</p>
+    <p>total HP: {{ Math.round(totalHitPoint) }} 
+      <span 
+        class="cure"
+        v-show="totalCure > 0"
+      >
+        + {{ Math.round(totalCure) }}
+      </span>
+    </p>
     <!-- <p>Total ATK: {{ totalAttack }}</p> -->
     <!-- <p>attr Damage: {{ totalDamage }}</p> -->
     <p>total Damage: {{ Math.round(vsAttrDamage) }}</p>
@@ -62,6 +69,7 @@
         @update:HP-ATK="updateStatus(i-1, $event)"
         @update:totalDamage="updateDamage(i-1, $event)"
         @update:availableBuff="updateAvailableBuff(i-1, $event)"
+        @update:Cure="updateCure(i-1, $event)"
         @update:savedData="saveData($event)"
         @delete-data="deleteData($event)"
       />
@@ -82,6 +90,7 @@ export default {
       partyMember: [-1, -1, -1, -1, -1],
       partyHitPointList: [0, 0, 0, 0, 0],
       partyAttackList: [0, 0, 0, 0, 0],
+      partyCure: [0, 0, 0, 0, 0],
       partyDamageList: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       AvailableBuffs: [[{}, {}], [{}, {}], [{}, {}], [{}, {}], [{}, {}]],
       attrs: ["火", "水", "木", "無"],
@@ -102,6 +111,9 @@ export default {
     },
     updateAvailableBuff(index, buffs) {
       this.AvailableBuffs[index] = buffs
+    },
+    updateCure(index, cure) {
+      this.partyCure[index] = cure;
     },
     clearAll() {
       if (!confirm("現在の入力をすべて削除しますか？")) {
@@ -157,6 +169,9 @@ export default {
         + this.totalDamage[(this.vsAttr + 2) % 3] * 0.5;
       }
       return total;
+    },
+    totalCure() {
+      return this.partyCure.reduce((sum, ele) => sum + ele);
     }
   }
 }

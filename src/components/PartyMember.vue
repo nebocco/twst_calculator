@@ -83,6 +83,7 @@
     @update:buddyLevel="buddyLevelRef = $event"
   />
   <h3>魔法</h3>
+  {{ BuffCure }}
   <Magic 
     v-for="i in 2"
     :key="'magic' + i"
@@ -98,6 +99,7 @@
     @update:totalDamage="$emit('update:totalDamage', [i-1, $event])" 
     @update:availableBuff="updateAvailableBuff(i-1, $event)"
     @update:magicLevel="magicLevelRef[i-1] = $event"
+    @update:BuffCure="updateBuffCure(i-1, $event)"
   />
 </div>
 </template>
@@ -122,6 +124,7 @@ export default {
       availableBuff: [{}, {}],
       buddyLevelRef: [1, 1, 1],
       magicLevelRef: [1, 1],
+      BuffCure: [0, 0],
     }
   },
   methods: {
@@ -153,6 +156,11 @@ export default {
         }
       });
       this.$emit('update:availableBuff', emitBuff);
+    },
+    updateBuffCure(index, buff) {
+      this.BuffCure[index] = buff;
+      let cure = this.BuffCure[0] + this.BuffCure[1];
+      this.$emit("update:Cure", cure * this.Attack);
     },
     clearAll() {
       this.Name = -1;

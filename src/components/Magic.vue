@@ -39,6 +39,7 @@
         </dd>
       </dl>
     </div>
+    {{ BuffCure }}
     <div class="accordion">
       <div class="title" @click="openAccordion">
         <div class="title-text">
@@ -135,7 +136,7 @@ export default {
     },
     removeExceptUP(buff) {
       return {
-        text: buff.text.split('&').filter(t => t.includes("UP")).join('&'),
+        text: buff.text.split(' & ').filter(t => t.includes("UP")).join(' & '),
         level: buff.level,
         from: buff.from
       }
@@ -172,7 +173,6 @@ export default {
       .map(buff => this.removeExceptUP(buff))
       .filter(buff => buff.text !== "")
     },
-    
     BuffAttack() {
       if (this.magicCurrent === null)
         return 0;
@@ -185,15 +185,14 @@ export default {
 
       this.buffs
       .concat(current)
-      .filter(buff => buff.text.includes("ATK UP"))
       .forEach(buff => {
-        if (buff.text.includes("極小")) 
+        if (buff.text.includes("ATK UP（極小")) 
           totalBuff += 0.05 + 0.005 * buff.level;
-        else if (buff.text.includes("小")) 
+        else if (buff.text.includes("ATK UP（小")) 
           totalBuff += 0.1 + 0.01 * buff.level;
-        else if (buff.text.includes("中")) 
+        else if (buff.text.includes("ATK UP（中")) 
           totalBuff += 0.2 + 0.015 * buff.level;
-        else if (buff.text.includes("大")) 
+        else if (buff.text.includes("ATK UP（大")) 
           totalBuff += 0.5;
       })
       return this.BaseAttack * totalBuff;
@@ -210,19 +209,18 @@ export default {
 
       this.buffs
       .concat(current)
-      .filter(buff => buff.text.includes("ダメージ UP"))
       .forEach(buff => {
         const bonus = 
-          buff.text.includes(attrs[this.magicCurrent.magic.attr] + "属性") ? 1.2 :
-          buff.text.includes("属性") ? 0 : 1
+          buff.text.includes(attrs[this.magicCurrent.magic.attr] + "属性ダメージ UP") ? 1.2 :
+          buff.text.includes("属性ダメージ UP") ? 0 : 1
 
-        if (buff.text.includes("極小")) 
+        if (buff.text.includes("ダメージ UP（極小")) 
           totalBuff += (0.0125 +  0.00125 * buff.level) * bonus;
-        else if (buff.text.includes("小")) 
+        else if (buff.text.includes("ダメージ UP（小")) 
           totalBuff += (0.025 + 0.0025 * buff.level) * bonus;
-        else if (buff.text.includes("中")) 
+        else if (buff.text.includes("ダメージ UP（中")) 
           totalBuff += (0.05 + 0.00375 * buff.level) * bonus;
-        else if (buff.text.includes("大")) 
+        else if (buff.text.includes("ダメージ UP（大")) 
           totalBuff += (0.125) * bonus;
       })
       return totalBuff
@@ -282,6 +280,23 @@ export default {
       } else {
         return ""
       }
+    },
+    BuffCure() {
+      if (this.magicCurrent === null) {
+        return 0;
+      }
+      let text = this.magicCurrent.text;
+      let totalBuff = 0;
+      if (text.includes("HP回復（極小")) {
+        totalBuff += 0.5 + 0.01 * this.magicLevel;
+      } else if (text.includes("HP回復（小")) {
+        totalBuff += 0.9 + 0.02 * this.magicLevel;
+      } else if (text.includes("HP回復（中")) {
+        totalBuff += 1.3 + 0.04 * this.magicLevel;
+      } else if (text.includes("HP継続回復（中")) {
+        totalBuff += 1.15 + 0.03 * this.magicLevel;
+      }
+      return totalBuff;
     }
   },
   watch: {
@@ -317,7 +332,11 @@ export default {
       } else {
         this.$emit('update:availableBuff', {});
       }
+    },
+    BuffCure() {
+      this.$emit('update:BuffCure', this.BuffCure);
     }
+
   }
 }
 </script>

@@ -108,7 +108,7 @@ export default {
             t.push(this.effectTextBase[i])
           }
         }
-        return t.join("&")
+        return t.join(" & ")
       })
       return text;
     }
