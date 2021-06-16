@@ -145,7 +145,6 @@ export default {
         buff.from = this.characterList[this.Name].name +
           "【" + this.costumeList[this.Costume].name + "】"
       }
-      console.log(buff)
       this.availableBuff[index] = buff;
       let emitBuff = this.availableBuff.map(buff => {
         if (buff.text && buff.text.includes("選択")) {
@@ -162,7 +161,9 @@ export default {
       this.$emit("update:Cure", cure * this.Attack);
     },
     clearAll() {
-      if (!confirm(this.memberIndex + 1 + "人目の入力を削除しますか？"))
+      if (!confirm(this.memberIndex + 1 + "人目の入力を削除しますか？")) {
+        return;
+      }
       this.Name = -1;
       this.Costume = -1;
       this.HitPoint = 0;
@@ -212,7 +213,6 @@ export default {
     },
     loadData(savedName) {
       let data = this.savedData[savedName];
-      console.log(savedName, data)
       if (data) {
         this.unpackData(data);
       }
@@ -364,7 +364,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:hover, button:focus {
   background: var(--color-background-third);
 }
 

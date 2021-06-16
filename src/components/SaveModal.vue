@@ -147,7 +147,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:hover, button:focus {
   background: var(--color-background-third);
 }
 

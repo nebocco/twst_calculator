@@ -326,7 +326,6 @@ export default {
       this.$emit("update:magicLevel", this.magicLevel);
     },
     magicCurrent() {
-      console.log("update:availableBuff", this.memberIndex);
       if (this.magicCurrent !== null && this.magicCurrent.text.includes("UP")) {
         this.$emit('update:availableBuff', {
           text: this.magicCurrent.text,
@@ -409,7 +408,7 @@ input {
 
 input[disabled] {
   color: var(--color-letter-light);
-  background: #f2f4f6;
+  background: var(--color-background-disabled);
 }
 
 input:invalid {

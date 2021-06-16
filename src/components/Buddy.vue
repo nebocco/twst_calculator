@@ -180,7 +180,7 @@ input {
 
 input[disabled] {
   color: var(--color-letter-light);
-  background: var(--color-background-invalid);
+  background: var(--color-background-disabled);
 }
 
 input:invalid {

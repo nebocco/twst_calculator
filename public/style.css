@@ -5,9 +5,10 @@ body {
   --color-border: #5b6471;
   --color-border-light: #c5c5de;
   --color-warn: #cb1b45;
-  --color-ok: #3a8fb7;
-  --color-background-second: #F3F3F3;
+  --color-ok: #32ae85;
+  --color-background-second: #f2f4f6;
   --color-background-third: #DADADA;
+  --color-background-disabled: #f2f4f6;
   
   padding: 0;
   margin: 0 auto;
@@ -36,7 +37,7 @@ h1, h2, h3, h4, h5, h6, input, select, button {
     --color-ok: #32ae85;
     --color-background-second: #394657;
     --color-background-third: #506477;
-    --color-background-invalid: #2a3041;
+    --color-background-disabled: #2a3041;
   }
 
   input, select {

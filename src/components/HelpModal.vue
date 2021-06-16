@@ -419,6 +419,7 @@ li {
 .help-example-2 td,
 .help-example-2 th {
   border: none;
+  background: none;
 }
 
 .help-example-2 th {
@@ -460,7 +461,7 @@ li {
 
 .help-example-2 input[disabled] {
   color: var(--color-letter-light);
-  background: var(--color-background-invalid);
+  background: var(--color-background-disabled);
 }
 
 .help-example-2 input.not-disabled {

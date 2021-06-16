@@ -198,7 +198,7 @@ button {
   border: 2px solid var(--color-warn);
 }
 
-button:hover {
+button:hover, button:focus {
   background: var(--color-background-third);
 }
 
@@ -207,6 +207,9 @@ button:hover {
   font-size: 1.2em;
 }
 
+span.cure {
+  color: var(--color-ok)
+}
 
 .vs-attr-container {
   /* width: 100%; */

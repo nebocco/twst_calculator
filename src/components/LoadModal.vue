@@ -61,6 +61,9 @@ export default {
     },
 
     deleteData() {
+      if (!confirm("「" + this.dataName + "」を削除しますか？")) {
+        return;
+      }
       if (this.dataName) {
         this.$emit("delete-data", this.dataName);
       }
@@ -155,7 +158,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:hover, button:focus {
   background: var(--color-background-third);
 }
 
