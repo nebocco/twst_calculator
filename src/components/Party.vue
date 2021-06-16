@@ -256,7 +256,7 @@ span.cure {
 .attr-selector.active {
   background-color: var(--color-border);
   font-weight: bold;
-  color: #eee;
+  color: var(--color-background-second);
 }
 
 .party-tab {
@@ -298,7 +298,7 @@ li.tab-item:last-child {
 
 li.tab-item.is-selected {
   background-color: var(--color-border);
-  color: #eee;
+  color: var(--color-background-second);
   font-weight: bold;
 }
 

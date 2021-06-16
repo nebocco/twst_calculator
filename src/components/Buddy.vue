@@ -185,7 +185,7 @@ input[disabled] {
 
 input:invalid {
   border-color: var(--color-warn);
-  background: #eecccc;
+  background: var(--color-background-invalid);
 }
 
 </style>

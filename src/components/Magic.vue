@@ -412,8 +412,8 @@ input[disabled] {
 }
 
 input:invalid {
-  border-color: red;
-  background: #eecccc;
+  border-color: var(--color-warn);
+  background: var(--color-background-invalid);
 }
 
 ul.buffs-list {
