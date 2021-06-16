@@ -296,6 +296,8 @@ export default {
         totalBuff += 0.9 + 0.02 * this.magicLevel;
       } else if (text.includes("HP回復（中")) {
         totalBuff += 1.3 + 0.04 * this.magicLevel;
+      } else if (text.includes("HP継続回復（小")) {
+        totalBuff += 0.65 + 0.01 * this.magicLevel;
       } else if (text.includes("HP継続回復（中")) {
         totalBuff += 1.15 + 0.03 * this.magicLevel;
       }
