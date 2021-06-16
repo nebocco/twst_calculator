@@ -83,7 +83,6 @@
     @update:buddyLevel="buddyLevelRef = $event"
   />
   <h3>魔法</h3>
-  {{ BuffCure }}
   <Magic 
     v-for="i in 2"
     :key="'magic' + i"

@@ -9,8 +9,8 @@
         v-model.number="magicLevel"
         min="1"
         max="10"
-        @focus="magicLevel=''"
-        @blur="magicLevel = Math.min(10, Math.max(1, magicLevel))"
+        @focus="{ levelStash = magicLevel; magicLevel=''; }"
+        @blur="magicLevel = magicLevel === '' ? levelStash : Math.min(10, Math.max(1, magicLevel))"
         :disabled="magicCurrent === null"
       />
     </div>
@@ -39,7 +39,6 @@
         </dd>
       </dl>
     </div>
-    {{ BuffCure }}
     <div class="accordion">
       <div class="title" @click="openAccordion">
         <div class="title-text">
@@ -91,6 +90,7 @@ export default {
   data() {
     return {
       magicLevel: 1,
+      levelStash: '',
       buffs: [],
       newBuff: "",
       DuoEnabled: false,
@@ -345,7 +345,8 @@ export default {
 h4 {
   display: inline-block;
   font-size: 1.2em;
-  margin-right: .2em;
+  margin: auto;
+  padding: 0;
 }
 
 dl {
@@ -382,6 +383,7 @@ dd::before {
 .magic-name {
   display: flex;
   align-items: baseline;
+  margin-bottom: 0.4em;
 }
 
 .magic-name > h4 {
@@ -389,16 +391,18 @@ dd::before {
 }
 
 label {
-  margin-right: .6em;
+  margin: auto .6em auto 0;
 }
 
 input {
   width: 20%;
   background: none;
+  margin: 0;
   border: 1px solid #c5c5de;
   border-radius: 0;
   text-align: end;
 }
+
 
 input[disabled] {
   color: #aaa;

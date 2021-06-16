@@ -24,8 +24,8 @@
           :name="'buddy-' + memberIndex + index"
           :disabled="!buddyEnabled[index]"
           @input="$emit('update:buffsBuddy', buffs)"
-          @focus="buddyLevel[index] = ''"
-          @blur="buddyLevel[index] = Math.min(10, Math.max(1, buddyLevel[index]))"
+          @focus="{ levelStash[index] = buddyLevel[index]; buddyLevel[index] = ''; }"
+          @blur="buddyLevel[index] = buddyLevel[index] === '' ? levelStash[index] : Math.min(10, Math.max(1, buddyLevel[index]))"
         >
       </td>
     </tr>
@@ -43,6 +43,7 @@ export default {
         "HP UP（中）",
       ],
       buddyLevel: [1, 1, 1],
+      levelStash: [1, 1, 1],
     }
   },
   props: {
