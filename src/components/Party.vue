@@ -191,12 +191,15 @@ button {
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-  background: none;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
-  color: #cb1b45;
-  border: 2px solid #cb1b45;
+  color: var(--color-warn);
+  border: 2px solid var(--color-warn);
+}
+
+button:hover {
+  background: var(--color-background-third);
 }
 
 .result > p {
@@ -227,19 +230,19 @@ button {
 
 .attr-selector {
   padding: 10px 15px;
-  border: 2px solid #5b6471;
+  border: 2px solid var(--color-border);
 }
 
 .attr-selector:nth-child(1) {
-  background: #fee;
+  background: rgb(255, 0, 0, 0.1);
 }
 
 .attr-selector:nth-child(2) {
-  background: #eef;
+  background: rgb(0, 0, 255, 0.1);
 }
 
 .attr-selector:nth-child(3) {
-  background: #efe;
+  background: rgba(0, 255, 255, 0.1);
 }
 
 
@@ -248,7 +251,7 @@ button {
 }
 
 .attr-selector.active {
-  background-color: #5b6471;
+  background-color: var(--color-border);
   font-weight: bold;
   color: #eee;
 }
@@ -265,17 +268,21 @@ ul.tab {
   justify-content: space-between;
   width: 90%;
   padding: 0;
-  border-bottom: 5px solid #5b6471;
+  border-bottom: 3px solid var(--color-border);
 }
 
 li.tab-item {
   padding: 10px 25px;
   flex: 1;
   display: block;
-  border: 2px solid #5b6471;
+  border: 2px solid var(--color-border);
   cursor: pointer;
   border-bottom: none;
   font-size: 1.2em;
+}
+
+li.tab-item:hover {
+  background: var(--color-background-third);
 }
 
 li.tab-item:first-child {
@@ -286,9 +293,8 @@ li.tab-item:last-child {
   border-top-right-radius: .4em;
 }
 
-li.is-selected {
-  background-color: #5b6471;
-  /* border: 5px solid #5b6471; */
+li.tab-item.is-selected {
+  background-color: var(--color-border);
   color: #eee;
   font-weight: bold;
 }

@@ -96,7 +96,7 @@ export default {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--color-background);
   width: 90%;
   max-width: 900px;
   height: auto;
@@ -150,29 +150,30 @@ button {
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-  background: none;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
 }
 
+button:hover {
+  background: var(--color-background-third);
+}
+
 button.ok {
-  color: #3a8fb7;
-  border: 2px solid #3a8fb7;
+  color: var(--color-ok);
+  border: 2px solid var(--color-ok);
 }
 
 button.delete {
-  color: #cb1b45;
-  border: 2px solid #cb1b45;
+  color: var(--color-warn);
+  border: 2px solid var(--color-warn);
 }
 
 select {
   width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: var(--color-border) solid 3px;
 }
 
 </style>

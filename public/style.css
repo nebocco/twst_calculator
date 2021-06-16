@@ -1,10 +1,45 @@
 body {
+  --color-background: #ffffff;
+  --color-letter: #2c3e50;
+  --color-letter-light: #aaa; 
+  --color-border: #5b6471;
+  --color-border-light: #c5c5de;
+  --color-warn: #cb1b45;
+  --color-ok: #3a8fb7;
+  --color-background-second: #F3F3F3;
+  --color-background-third: #DADADA;
+  
   padding: 0;
   margin: 0 auto;
+  background: var(--color-background);
 }
-
 
 body.modal-opened {
   overflow: hidden;
   height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, input, select, button {
+  color: var(--color-letter);
+  background: none;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --color-background: #232937;
+    --color-letter: #e4f0fb;
+    --color-letter-light: #aaa;
+    --color-border: #7390aa;
+    --color-border-light: #7390aa;
+    --color-warn: #df4576;
+    --color-ok: #32ae85;
+    --color-background-second: #394657;
+    --color-background-third: #506477;
+    --color-background-invalid: #2a3041;
+  }
+
+  input, select {
+    background: var(--color-background-second);
+  }
 }

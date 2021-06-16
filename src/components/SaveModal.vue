@@ -87,7 +87,7 @@ export default {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--color-background);
   width: 90%;
   max-width: 900px;
   height: auto;
@@ -127,28 +127,28 @@ input {
   flex: 1;
   width: 90%;
   max-width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #333 solid 3px;
+  border-bottom: var(--color-border) solid 3px;
   margin: 0;
 }
 
 button {
   padding: .4em 1.2em;
   margin-left: .4em;
-
   font-size: 1rem;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-  background: none;
-  color: #3a8fb7;
-  border: 2px solid #3a8fb7;
+  color: var(--color-ok);
+  border: 2px solid var(--color-ok);
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+button:hover {
+  background: var(--color-background-third);
 }
 
 </style>

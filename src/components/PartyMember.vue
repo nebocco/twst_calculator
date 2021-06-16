@@ -162,6 +162,7 @@ export default {
       this.$emit("update:Cure", cure * this.Attack);
     },
     clearAll() {
+      if (!confirm(this.memberIndex + 1 + "人目の入力を削除しますか？"))
       this.Name = -1;
       this.Costume = -1;
       this.HitPoint = 0;
@@ -352,19 +353,29 @@ export default {
   justify-content: center;
 }
 
-button.clear {
+button {
+  padding: .4em 1.2em;
   font-size: 1rem;
-  display: inline-block;
-  padding: 6px 12px;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-  background: none;
-  color: #cb1b45;
-  border: 2px solid #cb1b45;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
+}
+
+button:hover {
+  background: var(--color-background-third);
+}
+
+button.green {
+  color: var(--color-ok);
+  border: 2px solid var(--color-ok);
+}
+
+button.red {
+  color: var(--color-warn);
+  border: 2px solid var(--color-warn);
 }
 
 h3 {
@@ -386,11 +397,9 @@ h3 {
 
 .card-detail > select {
   width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #5b6471 solid 2px;
+  border-bottom: var(--color-border) solid 2px;
 }
 
 .card-detail option:disabled {
@@ -414,11 +423,9 @@ h3 {
 .status-each > input {
   width: 90%;
   max-width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #5b6471 solid 2px;
+  border-bottom: var(--color-border) solid 2px;
   text-align: right;
 }
 
@@ -429,26 +436,5 @@ h3 {
   margin: .8em auto 1.2em;
 }
 
-button {
-  padding: .4em 1.2em;
-  font-size: 1rem;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  background: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-button.green {
-  color: #3a8fb7;
-  border: 2px solid #3a8fb7;
-}
-
-button.red {
-  color: #cb1b45;
-  border: 2px solid #cb1b45;
-}
 
 </style>

@@ -361,7 +361,7 @@ dl {
 dt {
   width: 35%;
   padding: 10px;
-  background-color: #DADADA;
+  background-color: var(--color-background-third);
   margin: 0 0 10px 0;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -373,7 +373,7 @@ dt {
 dd {
   width: 65%;
   padding: 10px;
-  background-color: #F3F3F3;
+  background-color: var(--color-background-second);
   margin: 0 0 10px 0;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -399,9 +399,8 @@ label {
 
 input {
   width: 20%;
-  background: none;
   margin: 0;
-  border: 1px solid #c5c5de;
+  border: 1px solid var(--color-border-light);
   border-radius: 0;
   text-align: end;
   display: inline;
@@ -409,7 +408,7 @@ input {
 
 
 input[disabled] {
-  color: #aaa;
+  color: var(--color-letter-light);
   background: #f2f4f6;
 }
 
@@ -424,7 +423,7 @@ ul.buffs-list {
 }
 
 li.selected-buffs {
-  border: 2px solid #5b6471;
+  border: 2px solid var(--color-border);
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -438,11 +437,13 @@ li.selected-buffs {
 .selected-buffs button {
   width: 15%;
   max-width: 40px;
-  background: none;
-  color: #333;
 }
 
 .buffs-list select {
+  padding: .4em .8em;
+  margin: 0;
+  border: 1px solid var(--color-border-light);
+  border-radius: 0;
   width: 100%;
 }
 
@@ -462,7 +463,7 @@ li.selected-buffs {
 .title {
   margin-bottom: 10px;
   padding: 10px;
-  border-bottom: 2px solid #5b6471;
+  border-bottom: 2px solid var(--color-border);
   text-align: left;
 }
 
@@ -486,11 +487,11 @@ li.selected-buffs {
 }
 
 .damage-number.compatible {
-  color: #cb1b45;
+  color: var(--color-warn);
 }
 
 .damage-number.incompatible {
-  color: #3a8fb7;
+  color: var(--color-ok);
 }
 
 </style>

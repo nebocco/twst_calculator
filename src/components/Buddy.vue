@@ -142,19 +142,19 @@ tr, td, th {
 }
 
 th {
-  color: #5b6471;
-  border-bottom: 2px solid #5b6471;
+  color: var(--color-border);
+  border-bottom: 2px solid var(--color-border);
 }
 
 td {
-  color: #aaa;
-  border-bottom: 1px solid #ddd;
+  color: var(--color-letter-light);
+  border-bottom: 1px solid var(--color-border-light);
   padding: .2em 0;
 }
 
 tr.buddy-enabled > td {
   font-weight: bold;
-  color: #333;
+  color: var(--color-letter);
 }
 
 td:first-child {
@@ -173,19 +173,18 @@ input {
   width: 100%;
   padding: 0.2em 0.4em;
   margin: 0;
-  background: none;
-  border: 1px solid #c5c5de;
+  border: 1px solid var(--color-border-light);
   border-radius: 0;
   text-align: end;
 }
 
 input[disabled] {
-  color: #aaa;
-  background: #f2f4f6;
+  color: var(--color-letter-light);
+  background: var(--color-background-invalid);
 }
 
 input:invalid {
-  border-color: red;
+  border-color: var(--color-warn);
   background: #eecccc;
 }
 

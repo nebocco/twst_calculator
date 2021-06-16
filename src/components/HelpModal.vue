@@ -272,7 +272,7 @@ export default {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--color-background);
   width: 90%;
   max-width: 900px;
   height: 90%;
@@ -343,7 +343,7 @@ li {
 
 .list-table > dt {
   font-weight: bold;
-  color: #5b6471;
+  color: var(--color-border);
   width: 40%;
   margin-bottom: .2em;
 }
@@ -367,7 +367,7 @@ li {
 .help-example {
   margin: 20px 10px 35px;
   padding: 5px;
-  border: 1px dotted gray;
+  border: 1px dotted var(--color-border);
 }
 
 /* help 1 */
@@ -383,11 +383,9 @@ li {
 .help-example-1 .card-box .card-detail select:disabled {
   display: inline-block;
   width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #5b6471 solid 3px;
+  border-bottom: var(--color-border) solid 3px;
   opacity: unset;
 }
 
@@ -408,11 +406,9 @@ li {
 .help-example-1 .status-each > input:disabled {
   width: 90%;
   max-width: 90%;
-  background: none;
   border: none;
   border-radius: 0;
-  color: #333;
-  border-bottom: #5b6471 solid 3px;
+  border-bottom: var(--color-border) solid 3px;
   text-align: right;
   opacity: unset;
 }
@@ -423,23 +419,22 @@ li {
 .help-example-2 td,
 .help-example-2 th {
   border: none;
-  background: none;
 }
 
 .help-example-2 th {
-  color: #5b6471;
-  border-bottom: 2px solid #5b6471;
+  color: var(--color-border);
+  border-bottom: 2px solid var(--color-border);
 }
 
 .help-example-2 td {
-  color: #aaa;
-  border-bottom: 1px solid #ddd;
+  color: var(--color-letter-light);
+  border-bottom: 1px solid var(--color-border-light);
   padding: .2em 0;
 }
 
 .help-example-2 tr.buddy-enabled > td {
   font-weight: bold;
-  color: #333;
+  color: var(--color-letter);
 }
 
 .help-example-2 td:last-child {
@@ -456,23 +451,21 @@ li {
 
 .help-example-2 input {
   width: 100%;
-  background: #fafbfc;
   padding: 0.2em 0.4em;
   margin: 0;
-  border: none;
+  border: 1px solid var(--color-border-light);
   border-radius: 0;
-  background: none;
   text-align: end;
 }
 
-.help-example-2 input:disabled {
-  color: #aaa;
-  background: #f2f4f6;
+.help-example-2 input[disabled] {
+  color: var(--color-letter-light);
+  background: var(--color-background-invalid);
 }
 
 .help-example-2 input.not-disabled {
-  color: unset;
-  background: unset;
+  color: var(--color-letter);
+  background: var(--color-background-second);
 }
 
 /* help 3 */
@@ -492,7 +485,7 @@ li {
 .help-example-3 dt {
   width: 35%;
   padding: 10px;
-  background-color: #DADADA;
+  background-color: var(--color-background-third);
   margin: 0 0 10px 0;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -504,7 +497,7 @@ li {
 .help-example-3 dd {
   width: 65%;
   padding: 10px;
-  background-color: #F3F3F3;
+  background-color: var(--color-background-second);
   margin: 0 0 10px 0;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -529,7 +522,11 @@ li {
 
 .help-example-3 input {
   width: 20%;
-  text-align: right;
+  margin: 0;
+  border: 1px solid var(--color-border-light);
+  border-radius: 0;
+  text-align: end;
+  display: inline;
 }
 
 /* help 4 */
@@ -540,7 +537,7 @@ li {
 }
 
 .help-example-4 li.selected-buffs {
-  border: 2px solid #5b6471;
+  border: 2px solid var(--color-border);
   border-radius: 3px;
   display: flex;
   justify-content: space-between;
@@ -554,15 +551,16 @@ li {
 .help-example-4 .selected-buffs button:disabled {
   width: 15%;
   max-width: 40px;
-  background: none;
-  color: #333;
   opacity: unset;
   cursor: unset;
 }
 
-.help-example-4 .buffs-list select:disabled {
+.help-example-4 .buffs-list select {
+  padding: .4em .8em;
+  margin: 0;
+  border: 1px solid var(--color-border-light);
+  border-radius: 0;
   width: 100%;
-  opacity: unset;
 }
 
 .help-example-4 .buff-name {
@@ -572,7 +570,7 @@ li {
 .help-example-4 .title {
   margin-bottom: 10px;
   padding: 10px;
-  border-bottom: 2px solid #5b6471;
+  border-bottom: 2px solid var(--color-border);
   text-align: left;
 }
 
