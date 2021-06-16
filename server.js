@@ -1,6 +1,6 @@
-import express from 'express';
-import path from 'path';
-import serveStatic from 'serve-static';
+var express = require('express');
+var path = require('path');
+var serveStatic = require('serve-static');
 // import sslRedirect from 'heroku-ssl-redirect'
 
 const app = express();
