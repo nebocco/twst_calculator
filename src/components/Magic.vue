@@ -247,7 +247,7 @@ export default {
         let damage = this.totalDamage[3];
         let self_attr = this.magicCurrent.magic.attr;
         if (self_attr == 3) {
-          return damage * 1.2;
+          return damage * 1.1;
         } else if (this.compatibility == 1) {
           return damage * 1.5;
         } else if (this.compatibility == -1) {
