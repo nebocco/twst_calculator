@@ -221,7 +221,14 @@ export default {
       }
     },
     saveData(saveName) {
-      this.$emit('update:savedData', [saveName, Object.assign({}, this.characterSaveData)])
+      this.$emit('update:savedData', [saveName, {
+        name: this.characterSaveData.name,
+        costume: this.characterSaveData.costume,
+        hp: this.characterSaveData.hp,
+        atk: this.characterSaveData.atk,
+        buddyLevel: Array.from(this.characterSaveData.buddyLevel),
+        magicLevel: Array.from(this.characterSaveData.magicLevel),
+      }])
     }
   },
   props: {
