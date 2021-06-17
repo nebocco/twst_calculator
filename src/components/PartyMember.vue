@@ -2,7 +2,7 @@
 <div class="party-member">
   <!-- <h3>カード</h3> -->
   <div class="button-container">
-    <button class="red" @click="clearAll">Clear</button>
+    <button class="red" @click="clearAll(false)">Clear</button>
     <button class="green" @click="$refs.save_modal.show()">Save</button>
     <button class="green" @click="$refs.load_modal.show()">Load</button>
     <SaveModal ref="save_modal"
@@ -160,8 +160,8 @@ export default {
       let cure = this.BuffCure[0] + this.BuffCure[1];
       this.$emit("update:Cure", cure * this.Attack);
     },
-    clearAll() {
-      if (!confirm(this.memberIndex + 1 + "人目の入力を削除しますか？")) {
+    clearAll(force) {
+      if (!force && !confirm(this.memberIndex + 1 + "人目の入力を削除しますか？")) {
         return;
       }
       this.Name = -1;
@@ -178,7 +178,7 @@ export default {
       this.$refs.buddy.clearAll();
     },
     unpackData(member) {
-      if (!this.cardReverseIndex[member.name][member.costume]) {
+      if (!this.cardReverseIndex[member.name][member.costume] < 0) {
         return;
       }
       this.Name = member.name;

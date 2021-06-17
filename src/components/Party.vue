@@ -122,7 +122,7 @@ export default {
       
       this.currentMember = 1;
       for (let i = 0; i < 5; ++i) {
-        this.$refs["member" + i].clearAll();
+        this.$refs["member" + i].clearAll(true);
       }
     },
     loadStorage() {
