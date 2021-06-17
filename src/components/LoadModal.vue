@@ -67,7 +67,6 @@ export default {
       if (this.dataName) {
         this.$emit("delete-data", this.dataName);
       }
-      this.hide();
     }
   },
 
