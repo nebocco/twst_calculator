@@ -129,6 +129,7 @@ export default {
   methods: {
     fillDetails() {
       if(this.Name < 0 || this.Costume < 0) {
+        this.$emit('select-card', -1);
         return
       }
       const card = this.cardList[this.cardReverseIndex[this.Name][this.Costume]];
@@ -176,6 +177,8 @@ export default {
       this.$refs.magic1.clearAll();
       this.$refs.magic2.clearAll();
       this.$refs.buddy.clearAll();
+
+      this.fillDetails()
     },
     unpackData(member) {
       if (!this.cardReverseIndex[member.name][member.costume] < 0) {
