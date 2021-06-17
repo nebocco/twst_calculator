@@ -468,14 +468,20 @@ li {
   text-align: end;
 }
 
-.help-example-2 input[disabled] {
+.help-example-2 input:disabled {
   color: var(--color-letter-light);
   background: var(--color-background-disabled);
 }
 
 .help-example-2 input.not-disabled {
   color: var(--color-letter);
-  background: var(--color-background-second);
+  background: none;
+}
+
+@media(prefers-color-scheme:dark) {
+  .help-example-2 input.not-disabled {
+     background: var(--color-background-second);
+  }
 }
 
 /* help 3 */

@@ -66,6 +66,7 @@
               </button>
             </li>
             <li class="add-buff">
+              <div class="select-wrap">
               <select v-model="newBuff">
                 <option disabled value="">バフを追加</option>
                 <option
@@ -76,6 +77,7 @@
                   {{ buff.text + "（" + buff.from + "）"}}
                 </option>
               </select>
+              </div>
             </li>
           </ul>
         </div>
@@ -441,11 +443,28 @@ li.selected-buffs {
 }
 
 .buffs-list select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   padding: .4em .8em;
   margin: 0;
   border: 1px solid var(--color-border-light);
   border-radius: 0;
   width: 100%;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  position: absolute;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: .8em;
+  content: "\f078";
+  right: .8em;
+  top: 30%;
 }
 
 .buff-name {

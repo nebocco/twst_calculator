@@ -18,6 +18,7 @@
   </div>
   <div class="card-box">
     <div class="card-detail">
+      <div class="select-wrap">
       <select
         name="characterName"
         v-model="Name"
@@ -32,8 +33,10 @@
           {{ c.name }}
         </option>
       </select>
+      </div>
     </div>
     <div class="card-detail">
+      <div class="select-wrap">
       <select
         name="characterCostume"
         v-model="Costume"
@@ -48,6 +51,7 @@
           {{ c.name }}
         </option>
       </select>
+      </div>
     </div>
   </div>
   <div class="status-box">
@@ -399,10 +403,27 @@ h3 {
 }
 
 .card-detail select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   width: 90%;
   border: none;
   border-radius: 0;
   border-bottom: var(--color-border) solid 2px;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap::after {
+  position: absolute;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: .8em;
+  content: "\f078";
+  right: 8%;
+  top: 24%;
 }
 
 .card-detail option:disabled {
