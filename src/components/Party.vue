@@ -133,7 +133,6 @@ export default {
     },
     saveData([name, data]) {
       this.savedData[name] = data;
-      console.log("save", name, data);
       localStorage.setItem('savedMembers', JSON.stringify(this.savedData));
     },
     deleteData(name) {

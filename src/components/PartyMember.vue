@@ -1,7 +1,6 @@
 <template>
 <div class="party-member">
   <!-- <h3>カード</h3> -->
-  {{ characterSaveData }}
   <div class="button-container">
     <button class="red" @click="clearAll(false)">Clear</button>
     <button class="green" @click="$refs.save_modal.show()">Save</button>
@@ -182,7 +181,6 @@ export default {
       if (!this.cardReverseIndex[member.name][member.costume] < 0) {
         return;
       }
-      console.log("unpack", member);
       this.Name = member.name;
       this.Costume = member.costume;
       this.HitPoint = member.hp;
@@ -216,19 +214,11 @@ export default {
     loadData(savedName) {
       let data = this.savedData[savedName];
       if (data) {
-        console.log('load', data);
         this.unpackData(data);
       }
     },
     saveData(saveName) {
-      this.$emit('update:savedData', [saveName, {
-        name: this.characterSaveData.name,
-        costume: this.characterSaveData.costume,
-        hp: this.characterSaveData.hp,
-        atk: this.characterSaveData.atk,
-        buddyLevel: Array.from(this.characterSaveData.buddyLevel),
-        magicLevel: Array.from(this.characterSaveData.magicLevel),
-      }])
+      this.$emit('update:savedData', [saveName, this.characterSaveData])
     }
   },
   props: {
@@ -328,8 +318,8 @@ export default {
         costume: this.Costume,
         hp: this.HitPoint,
         atk: this.Attack,
-        buddyLevel: this.buddyLevelRef,
-        magicLevel: this.magicLevelRef,
+        buddyLevel: Array.from(this.buddyLevelRef),
+        magicLevel: Array.from(this.magicLevelRef),
       }
     },
   },
@@ -405,7 +395,7 @@ h3 {
   flex: 1;
 }
 
-.card-detail > select {
+.card-detail select {
   width: 90%;
   border: none;
   border-radius: 0;
