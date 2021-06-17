@@ -221,7 +221,7 @@ export default {
       }
     },
     saveData(saveName) {
-      this.$emit('update:savedData', [saveName, this.characterSaveData])
+      this.$emit('update:savedData', [saveName, Object.assign({}, this.characterSaveData)])
     }
   },
   props: {
