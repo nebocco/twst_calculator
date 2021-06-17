@@ -5,7 +5,7 @@
       v-show="isOpened"
       @click.self="hide"
     >
-      <div id="modal" class="modal-container">
+      <div class="modal-container">
         <!-- <i class="fas fa-times" @click="hide" /> -->
         <div class="modal-text">
           <div class="text">
