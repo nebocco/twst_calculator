@@ -1,6 +1,7 @@
 <template>
 <div class="party-member">
   <!-- <h3>カード</h3> -->
+  {{ characterSaveData }}
   <div class="button-container">
     <button class="red" @click="clearAll(false)">Clear</button>
     <button class="green" @click="$refs.save_modal.show()">Save</button>
@@ -181,6 +182,7 @@ export default {
       if (!this.cardReverseIndex[member.name][member.costume] < 0) {
         return;
       }
+      console.log("unpack", member);
       this.Name = member.name;
       this.Costume = member.costume;
       this.HitPoint = member.hp;
@@ -214,6 +216,7 @@ export default {
     loadData(savedName) {
       let data = this.savedData[savedName];
       if (data) {
+        console.log('load', data);
         this.unpackData(data);
       }
     },
